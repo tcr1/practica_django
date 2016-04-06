@@ -1,11 +1,15 @@
 from django.utils import timezone
 from django.core import serializers
-from django.views.generic.edit import CreateView
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
+from django.views.generic.edit import CreateView
+
 from models import Botiga
 from forms import *
+
 
 # Create your views here.
 class ConnegResponseMixin(TemplateResponseMixin):
@@ -36,7 +40,12 @@ class BotigaCreate(CreateView):
     form_class = BotigaForm
 
     def form_valid(self, form):
+        print "hola 1"
         form.instance.user = self.request.user
+        print "hola2"
+        aux = super(BotigaCreate, self)
+        print "form"
+        print aux.form_valid(form)
         return super(BotigaCreate, self).form_valid(form)
 
 class BotigaList(ListView, ConnegResponseMixin):
@@ -46,22 +55,25 @@ class BotigaList(ListView, ConnegResponseMixin):
     template_name = 'icommerce/Botiga_list.html'
 
 class BotigaDetail(DetailView, ConnegResponseMixin):
+    print "2"
     model = Botiga
     template_name = 'icommerce/Botiga_detail.html'
 
     def get_context_data(self, **kwargs):
+        print "1"
         context = super(BotigaDetail, self).get_context_data(**kwargs)
         #context['RATING_CHOICES'] = RestaurantReview.RATING_CHOICES
         return context
 
 class MarcaList(ListView, ConnegResponseMixin):
     model =Marca
-    #queryset = Botiga.objects.filter(date__lte=timezone.now()).order_by('date')[:1]
-    #context_object_name = 'latest_marca_list'
+    print "hello"
+    queryset = Marca.objects.all()#filter(date__lte=timezone.now()).order_by('date')[:5]
+    context_object_name = 'latest_marca_list'
     template_name = 'icommerce/Marca_list.html'
 
     def get_queryset(self):
-        return Marca.objects.filter(botiga=self.kwargs['pk'])
+        return Marca.objects.all().filter(botiga=self.kwargs['pkb'])
 
 class MarcaDetail(DetailView, ConnegResponseMixin):
     model = Marca
@@ -74,7 +86,7 @@ class MarcaCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.botiga = Marca.objects.get(id=self.kwargs['pk'])
+        form.instance.botiga = Botiga.objects.get(id=self.kwargs['pkb'])
         return super(MarcaCreate, self).form_valid(form)
 
 class PesaRobaList(ListView, ConnegResponseMixin):

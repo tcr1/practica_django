@@ -16,7 +16,8 @@ class Botiga (models.Model):
         return u"%s" % self.id_botiga #+ " " + self.nom_botiga
 
     def get_absolute_url(self):
-        return reverse('commerce:botiga_detail', kwargs={'pk': self.pk})
+        print "adeu"
+        return reverse('icommerce:botiga_detail', kwargs={'pk': self.pk, 'extension': 'html'})
 
 class Marca(models.Model):
     codi_marca = models.IntegerField()
@@ -30,7 +31,7 @@ class Marca(models.Model):
         return u"%s" % self.codi_marca
 
     def get_absolute_url(self):
-        return reverse('commerce:marca_detail', kwargs={'pkr': self.botiga.pk,'pk': self.pk})
+        return reverse('icommerce:marca_detail', kwargs={'pkb': self.botiga.pk,'pk': self.pk, 'extension': 'html'})
 
 
 class Pesa_roba(models.Model):
@@ -53,7 +54,7 @@ class Pesa_roba(models.Model):
         return u"%s" % self.codi_pesa #+ " " + self.nom
 
     def get_absolute_url(self):
-        return reverse('commerce:Pesa_roba_detail', kwargs={'pk': self.pk})
+        return reverse('icommerce:Pesa_roba_detail', kwargs={'pk': self.pk})
 
 class Ciutat(models.Model):
     nom_ciutat = models.TextField()
