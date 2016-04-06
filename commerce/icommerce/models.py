@@ -1,16 +1,19 @@
 
 from django.db import models
 from django.core.urlresolvers import reverse
-
+from django.contrib.auth.models import User
+from datetime import date
 # Create your models here.
 class Botiga (models.Model):
     id_botiga=models.IntegerField()
     nom_botiga=models.TextField(blank=True, null=True)
     tipus_botiga=models.TextField(blank=True, null=True)
-    adress=models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, default=1)
+    adressa=models.TextField(blank=True, null=True)
+    date = models.DateField(default=date.today)
 
     def __unicode__(self):
-        return u"%s" % self.id_botiga + " " + self.nom_botiga
+        return u"%s" % self.id_botiga #+ " " + self.nom_botiga
 
     def get_absolute_url(self):
         return reverse('commerce:botiga_detail', kwargs={'pk': self.pk})
@@ -18,11 +21,13 @@ class Botiga (models.Model):
 class Marca(models.Model):
     codi_marca = models.IntegerField()
     nom_marca = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, default=1)
     descripcio = models.TextField(blank=True, null=True)
     botiga = models.ForeignKey(Botiga,null=True,related_name='botigues')
+    date = models.DateField(default=date.today)
 
     def __unicode__(self):
-        return u"%s" % self.name
+        return u"%s" % self.codi_marca
 
     def get_absolute_url(self):
         return reverse('commerce:marca_detail', kwargs={'pkr': self.botiga.pk,'pk': self.pk})
@@ -42,9 +47,10 @@ class Pesa_roba(models.Model):
     preu = models.DecimalField('Preu',max_digits=8,decimal_places=2,blank=True,null=True)
     descripcio = models.TextField(blank=True,null=True)
     imatge = models.ImageField(upload_to="icommerce",blank=True,null=True)
+    user = models.ForeignKey(User, default=1)
 
     def __unicode__(self):
-        return u"%s" % self.codi_pesa + " " + self.nom
+        return u"%s" % self.codi_pesa #+ " " + self.nom
 
     def get_absolute_url(self):
         return reverse('commerce:Pesa_roba_detail', kwargs={'pk': self.pk})

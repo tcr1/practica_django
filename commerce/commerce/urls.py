@@ -14,11 +14,18 @@ Including another URLconf
 """
 """from django.conf.urls import url, include
 from django.contrib import admin"""
-from django.conf.urls import url, include
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
+
+from icommerce.views import *
+
+
 urlpatterns = [
+    #url(r'^user/(\w+)/$', userpage),
+    #url(r'^$', mainpage, name='home'),
     url(r'^admin/', include(admin.site.urls)),
+    #url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^icommerce/', include('icommerce.urls', namespace='icommerce')),
 ]
 """from django.conf import settings
