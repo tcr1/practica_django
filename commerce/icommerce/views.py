@@ -67,17 +67,27 @@ class BotigaDetail(DetailView, ConnegResponseMixin):
 
 class MarcaList(ListView, ConnegResponseMixin):
     model =Marca
-    print "hello"
-    queryset = Marca.objects.all()#filter(date__lte=timezone.now()).order_by('date')[:5]
+    #print "hello"
+    queryset =  Marca.objects.filter(date__lte=timezone.now()).order_by('date')[:5]#Marca.objects.all()
     context_object_name = 'latest_marca_list'
     template_name = 'icommerce/Marca_list.html'
 
-    def get_queryset(self):
-        return Marca.objects.all().filter(botiga=self.kwargs['pkb'])
+
+    #def get_queryset(self):
+        #print self.kwargs['pkb']
+        #marques = Marca.objects.filter(botiga=Botiga.objects.filter(self.kwargs['pkb']))
+        #print marques
+        #return marques
 
 class MarcaDetail(DetailView, ConnegResponseMixin):
     model = Marca
     template_name = 'icommerce/Marca_detail.html'
+
+    def get_context_data(self, **kwargs):
+        #print "1"
+        context = super(MarcaDetail, self).get_context_data(**kwargs)
+        #context['RATING_CHOICES'] = RestaurantReview.RATING_CHOICES
+        return context
 
 class MarcaCreate(CreateView):
     model = Marca

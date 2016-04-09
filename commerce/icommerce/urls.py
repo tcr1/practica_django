@@ -16,17 +16,17 @@ urlpatterns = patterns('',
     # Restaurant details, ex.: /myrestaurants/restaurants/1.json
     url(r'^botigas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',BotigaDetail.as_view(), name='botiga_detail'),
 
-    # Create a restaurant: /myrestaurants/restaurants/create/ #petaaa
+    # Create a restaurant: /myrestaurants/restaurants/create/
     url(r'^botigas/create/$', BotigaCreate.as_view(), name='botiga_create'),
 
     # Botiga marca list, ex.: /icommerce/botigas/1/marcas.json #petaaa
     url(r'^botigas/(?P<pkb>\d+)/marcas\.(?P<extension>(json|xml|html))$',MarcaList.as_view(),name='marca_list'),
 
     # Restaurant dish details, ex.: /myrestaurants/restaurants/1/dishes/1.json
-    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',MarcaDetail.as_view(),
+    url(r'^botigas/(?P<pkr>\d+)/marcas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',MarcaDetail.as_view(),
         name='marca_detail'),
 
-    # Create a restaurant dish, ex: /myrestaurants/restaurants/1/dishes/create/ #petaaa
+    # Create a restaurant dish, ex: /myrestaurants/restaurants/1/dishes/create/
     url(r'^botigas/(?P<pkb>\d+)/marcas/create/$',MarcaCreate.as_view(),name='marca_create'),
 
     #Botiga marca pesa_roba list, ex; /icommerce/botigas/1/marcas/1/pesa_robas.json

@@ -16,7 +16,6 @@ class Botiga (models.Model):
         return u"%s" % self.id_botiga #+ " " + self.nom_botiga
 
     def get_absolute_url(self):
-        print "adeu"
         return reverse('icommerce:botiga_detail', kwargs={'pk': self.pk, 'extension': 'html'})
 
 class Marca(models.Model):
