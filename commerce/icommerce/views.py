@@ -40,7 +40,7 @@ class BotigaCreate(CreateView):
     form_class = BotigaForm
 
     def form_valid(self, form):
-        print "hola 1"
+
         form.instance.user = self.request.user
         print "hola2"
         aux = super(BotigaCreate, self)
