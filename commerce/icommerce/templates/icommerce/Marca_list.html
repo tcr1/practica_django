@@ -1,4 +1,6 @@
 
+
+
 <h2>
     Marca
 </h2>
@@ -6,9 +8,8 @@
 
     {% for marca in latest_marca_list %}
 
-
-
-            <li>{{ marca.nom_marca }} {{ marca.botiga }} {{marca.descripcio}}</li>
+            <li><a href="{% url 'icommerce:marca_detail'  marca.id 'html' %}">
+                {{marca.id }}</a> </li>
     {% empty %}<li>no marcas.</li>
     {% endfor %}
 </ul>

@@ -23,15 +23,19 @@ urlpatterns = patterns('',
     url(r'^botigas/(?P<pkb>\d+)/marcas\.(?P<extension>(json|xml|html))$',MarcaList.as_view(),name='marca_list'),
 
     # Restaurant dish details, ex.: /myrestaurants/restaurants/1/dishes/1.json
-    url(r'^botigas/(?P<pkr>\d+)/marcas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',MarcaDetail.as_view(),
+    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',MarcaDetail.as_view(),
         name='marca_detail'),
 
     # Create a restaurant dish, ex: /myrestaurants/restaurants/1/dishes/create/
     url(r'^botigas/(?P<pkb>\d+)/marcas/create/$',MarcaCreate.as_view(),name='marca_create'),
 
-    #Botiga marca pesa_roba list, ex; /icommerce/botigas/1/marcas/1/pesa_robas.json
-     #url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pk>\d+)/pesa_robas\.(?P<extension>(json|xml))$', PesaRobaList.as_view(),
-        #name='pesa_roba_list'),
+    #Botiga marca pesa_roba list, ex; /icommerce/botigas/1/marcas/1/pesas.json
+    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pkm>\d+)/pesas\.(?P<extension>(json|xml|html))$', PesaRobaList.as_view(),
+        name='pesa_list'),
+
+    #Restaurant dish details, ex.: /myrestaurants/restaurants/1/dishes/1.json
+    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pkm>\d+)/pesas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
+        PesaRobaDetail.as_view(),name='pesa_detail'),
 )
 
 

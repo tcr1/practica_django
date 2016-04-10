@@ -68,16 +68,16 @@ class BotigaDetail(DetailView, ConnegResponseMixin):
 class MarcaList(ListView, ConnegResponseMixin):
     model =Marca
     #print "hello"
-    queryset =  Marca.objects.filter(date__lte=timezone.now()).order_by('date')[:5]#Marca.objects.all()
+    queryset =  Marca.objects.all()#filter(date__lte=timezone.now()).order_by('date')[:5]#Marca.objects.all()
     context_object_name = 'latest_marca_list'
     template_name = 'icommerce/Marca_list.html'
 
 
-    #def get_queryset(self):
-        #print self.kwargs['pkb']
-        #marques = Marca.objects.filter(botiga=Botiga.objects.filter(self.kwargs['pkb']))
+    def get_queryset(self):
+        ## print self.kwargs['pkb']
+        marques = Marca.objects.filter(botiga=self.kwargs['pkb'])
         #print marques
-        #return marques
+        return marques
 
 class MarcaDetail(DetailView, ConnegResponseMixin):
     model = Marca
@@ -100,10 +100,24 @@ class MarcaCreate(CreateView):
         return super(MarcaCreate, self).form_valid(form)
 
 class PesaRobaList(ListView, ConnegResponseMixin):
-    model = Pesa_roba
-    #queryset = Botiga.objects.filter(date__lte=timezone.now()).order_by('date')[:1]
-    #context_object_name = 'latest_marca_list'
-    #template_name = 'icommerce/Marca_list.html'
+    model = Pesa
+    #print "hello"
+    queryset =  Pesa.objects.all()#filter(date__lte=timezone.now()).order_by('date')[:5]#Marca.objects.all()
+    context_object_name = 'latest_pesa_list'
+    template_name = 'icommerce/Pesa_list.html'
 
     def get_queryset(self):
-        return Pesa_roba.objects.filter(botiga=self.kwargs['pk'])
+        ## print self.kwargs['pkb']
+        peces = Pesa.objects.filter(botiga_pesa=self.kwargs['pkb'], marca_pesa=self.kwargs['pkm'])
+        # print marques
+        return peces
+
+class PesaRobaDetail(DetailView, ConnegResponseMixin):
+    model = Pesa
+    template_name = 'icommerce/Pesa_detail.html'
+
+    def get_context_data(self, **kwargs):
+        # print "1"
+        context = super(PesaRobaDetail, self).get_context_data(**kwargs)
+        # context['RATING_CHOICES'] = RestaurantReview.RATING_CHOICES
+        return context

@@ -1,0 +1,13 @@
+<h2>
+    Pesa
+</h2>
+<ul>
+
+    {% for pesa in latest_pesa_list %}
+
+
+
+            <li>{{ pesa.nom_pesa }} - {{pesa.descripcio}} - {{ pesa.botiga_pesa }} - {{pesa.marca_pesa}}</li>
+    {% empty %}<li>no pesas.</li>
+    {% endfor %}
+</ul>
