@@ -5,7 +5,7 @@
 
     {% for pesa in latest_pesa_list %}
 
-
+         <li><a href="{% url 'icommerce:marca_detail'  marca.id 'html' %}">
 
             <li>{{ pesa.nom_pesa }} - {{pesa.descripcio}} - {{ pesa.botiga_pesa }} - {{pesa.marca_pesa}}</li>
     {% empty %}<li>no pesas.</li>
