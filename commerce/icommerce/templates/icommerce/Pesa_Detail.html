@@ -1,5 +1,6 @@
-
- <h2>Pesa details:</h2>
+{% extends "icommerce/base.html" %}
+{% block content %}
+<h2>Pesa details:</h2>
 <ul>
     <li>{{pesa.nom_pesa }}</li>
     <li>{{pesa.tipus}}</li>
@@ -9,3 +10,4 @@
     <li>{{pesa.descripcio}}</li>
     <li>{{pesa.user}}</li>
 </ul>
+{% endblock %}

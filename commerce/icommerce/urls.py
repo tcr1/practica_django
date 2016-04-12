@@ -7,7 +7,7 @@ from models import Botiga
 urlpatterns = patterns('',
     # Home page
     url(r'^$',
-        RedirectView.as_view(url=reverse_lazy('icommerce:botiga_list', kwargs={'extension': 'html'})),
+       RedirectView.as_view(url=reverse_lazy('icommerce:botiga_list', kwargs={'extension': 'html'})),
         name='home_page'),
 
     # List restaurants: /myrestaurants/restaurants.json
@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^botigas/create/$', BotigaCreate.as_view(), name='botiga_create'),
 
     # Botiga marca list, ex.: /icommerce/botigas/1/marcas.json #petaaa
-    url(r'^botigas/(?P<pkb>\d+)/marcas\.(?P<extension>(json|xml|html))$',MarcaList.as_view(),name='marca_list'),
+    url(r'^botigas/(?P<pkb>\d+)/marcas\.(?P<extension>(json|xml))$',MarcaList.as_view(),name='marca_list'),
 
     # Restaurant dish details, ex.: /myrestaurants/restaurants/1/dishes/1.json
     url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',MarcaDetail.as_view(),
@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r'^botigas/(?P<pkb>\d+)/marcas/create/$',MarcaCreate.as_view(),name='marca_create'),
 
     #Botiga marca pesa_roba list, ex; /icommerce/botigas/1/marcas/1/pesas.json
-    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pkm>\d+)/pesas\.(?P<extension>(json|xml|html))$', PesaRobaList.as_view(),
+    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pkm>\d+)/pesas\.(?P<extension>(json|xml))$', PesaRobaList.as_view(),
         name='pesa_list'),
 
     #Restaurant dish details, ex.: /myrestaurants/restaurants/1/dishes/1.json

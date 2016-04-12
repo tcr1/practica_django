@@ -63,7 +63,7 @@ class Pesa(models.Model):
     preu = models.DecimalField('Preu',max_digits=8,decimal_places=2,blank=True,null=True)
     descripcio = models.TextField(blank=True,null=True)
     botiga_pesa = models.ForeignKey(Botiga, null=True, related_name='botigpesas')
-    marca_pesa = models.ForeignKey(Marca, null=True, related_name='marcas')
+    marca_pesa = models.ForeignKey(Marca, null=True, related_name='marco')
     #imatge = models.ImageField(upload_to="icommerce",blank=True,null=True)
     user = models.ForeignKey(User, default=1)
 

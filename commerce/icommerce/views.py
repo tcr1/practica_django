@@ -6,10 +6,23 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
+from django.template.loader import get_template
+from django.template import Context
 
 from models import Botiga
 from forms import *
 
+def mainpage(request):
+    template = get_template('mainpage.html')
+    variables = Context({
+        'titlehead': 'Icommerce Tandy',
+        'pagetitle': 'Welcome to Tandy',
+        'contentbody': 'A new page made in Spain since 2016',
+        'user': request.user,
+        'main':'true',
+    })
+    output = template.render(variables)
+    return HttpResponse(output)
 
 # Create your views here.
 class ConnegResponseMixin(TemplateResponseMixin):
@@ -114,7 +127,7 @@ class PesaRobaList(ListView, ConnegResponseMixin):
 
 class PesaRobaDetail(DetailView, ConnegResponseMixin):
     model = Pesa
-    template_name = 'icommerce/Pesa_detail.html'
+    template_name = 'icommerce/Pesa_Detail.html'
 
     def get_context_data(self, **kwargs):
         # print "1"
