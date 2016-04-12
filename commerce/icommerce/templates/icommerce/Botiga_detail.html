@@ -1,11 +1,25 @@
-
+{% extends "icommerce/base.html" %}
+{% block content %}
 <h2>Botiga details:</h2>
 <ul>
     <li>{{ botiga.nom_botiga }}</li>
     <li>{{botiga.tipus_botiga}}</li>
-    <li>{{botiga.id_botiga}}</li>
+    <li>{{botiga.id}}</li>
     <li>{{botiga.adressa}}</li>
     <li>{{botiga.user}}</li>
+    <li>{{botiga.ciutat}}</li>
     <li>{{botiga.date}}</li>
 </ul>
 
+<h2>
+    Marcas
+</h2>
+<ul>
+    {% for marca in botiga.marcas.all %}
+        <li><a href="{% url 'icommerce:marca_detail' botiga.id marca.id 'html' %}">
+            {{ marca.nom_marca }}</a></li>
+    {% empty %}<li>Sorry, no dishes for this restaurant yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,8 +1,23 @@
 <h2>Marca details:</h2>
 <ul>
-    <li>{{marca.codi_marca }}</li>
+    <li>{{marca.id}}</li>
     <li>{{marca.nom_marca}}</li>
     <li>{{marca.user}}</li>
     <li>{{marca.descripcio}}</li>
     <li>{{marca.date}}</li>
 </ul>
+
+<h2>
+    Pesa
+</h2>
+<ul>
+
+    {% for pesa in latest_pesa_list %}
+
+         <li><a href="{% url 'icommerce:marca_detail'  marca.id 'html' %}">
+
+            <li>{{ pesa.nom_pesa }} - {{pesa.descripcio}} - {{ pesa.botiga_pesa }} - {{pesa.marca_pesa}}</li>
+    {% empty %}<li>no pesas.</li>
+    {% endfor %}
+</ul>
+

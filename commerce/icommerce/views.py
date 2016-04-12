@@ -69,8 +69,8 @@ class MarcaList(ListView, ConnegResponseMixin):
     model =Marca
     #print "hello"
     queryset =  Marca.objects.all()#filter(date__lte=timezone.now()).order_by('date')[:5]#Marca.objects.all()
-    context_object_name = 'latest_marca_list'
-    template_name = 'icommerce/Marca_list.html'
+    #context_object_name = 'latest_marca_list'
+    #template_name = 'icommerce/Marca_list.html'
 
 
     def get_queryset(self):

@@ -4,27 +4,42 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from datetime import date
 # Create your models here.
+
+class Ciutat(models.Model):
+    nom_ciutat = models.TextField()
+    moneda = models.TextField(default="euro")
+
+
+    def __unicode__(self):
+        return u"%s" % self.nom_ciutat
+
+    def get_absolute_url(self):
+        return reverse('icommerce:ciutat_detail',
+                       kwargs={'pk': self.pk,'extension': 'html'})
 class Botiga (models.Model):
     #id_botiga=models.IntegerField()
     nom_botiga=models.TextField(blank=True, null=True)
     tipus_botiga=models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     adressa=models.TextField(blank=True, null=True)
+    ciutat= models.ForeignKey(Ciutat, null=True, related_name='ciutats')
     date = models.DateField(default=date.today)
+
 
     def __unicode__(self):
         return u"%s" % self.nom_botiga
 
     def get_absolute_url(self):
-        return reverse('icommerce:botiga_detail', kwargs={'pk': self.pk, 'extension': 'html'})
+        return reverse('icommerce:botiga_detail', kwargs={'pkc': self.ciutat.pk,'pk': self.pk, 'extension': 'html'})
 
 class Marca(models.Model):
     #codi_marca = models.IntegerField()
     nom_marca = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     descripcio = models.TextField(blank=True, null=True)
-    botiga = models.ForeignKey(Botiga,null=True,related_name='botigues')
+    botiga = models.ForeignKey(Botiga,null=True,related_name='marcas')
     date = models.DateField(default=date.today)
+    botigas = models.ManyToManyField(Botiga)
 
     def __unicode__(self):
         return u"%s" % self.nom_marca
@@ -59,6 +74,5 @@ class Pesa(models.Model):
         return reverse('icommerce:pesa_detail', kwargs={'pkb': self.botiga_pesa, 'pkm': self.marca_pesa.pk, 'pk':self.pk,
                                                         'extension': 'html' })
 
-class Ciutat(models.Model):
-    nom_ciutat = models.TextField()
-    moneda = models.TextField(default="euro")
+
+
