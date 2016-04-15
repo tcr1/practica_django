@@ -1,13 +1,38 @@
 {% extends "icommerce/base.html" %}
 {% block content %}
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+th, td {
+	padding: 5px;
+}
+</style>
+</head>
+
+<body>
 <h2>Pesa details:</h2>
-<ul>
-    <li>{{pesa.nom_pesa }}</li>
-    <li>{{pesa.tipus}}</li>
-    <li>{{pesa.colors}}</li>
-    <li>{{pesa.talla}}</li>
-    <li>{{pesa.preu}}</li>
-    <li>{{pesa.descripcio}}</li>
-    <li>{{pesa.user}}</li>
-</ul>
+<table style="width: 100%">
+    <thead>
+        <td><b>Nom pesa</b></td>
+        <td><b>Tipus</b></td>
+        <td><b>color</b></td>
+        <td><b>talla</b></td>
+        <td><b>preu</b></td>
+        <td><b>descripcio</b></td>
+        <td><b>user</b></td>
+    </thead>
+
+    <tr>
+        <td>{{pesa.nom_pesa }}</td>
+        <td>{{pesa.tipus}}</td>
+        <td>{{pesa.colors}}</td>
+        <td>{{pesa.talla}}</td>
+        <td>{{pesa.preu}}</td>
+        <td>{{pesa.descripcio}}</td>
+        <td>{{pesa.user}}</td>
+    </tr>
+</table>
+</body>
 {% endblock %}
