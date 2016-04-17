@@ -1,0 +1,11 @@
+{% extends "icommerce/base.html" %}
+{% block content %}
+{% if user.username %}
+<p> Benvingut a Tandy {{ user.username }}!
+Entra i comença a descobrir totes les botigues!
+</p>
+{% else %}
+<p> Benvingut estimat client:
+Has de <a href="/login/">Loguejarte!</a> per veure totes les botigues.</p>
+{% endif %}
+{% endblock %}
