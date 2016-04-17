@@ -13,11 +13,18 @@ urlpatterns = patterns('',
     # List Botigas: /icommerce/botigas.json
     url(r'^botigas\.(?P<extension>(json|xml|html))$',BotigaList.as_view(), name='botiga_list'),
 
-    # Botiga details, ex.:     /icommerce/botigas/1.json
+    # Botiga details, ex.:/icommerce/botigas/1.json
     url(r'^botigas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',BotigaDetail.as_view(), name='botiga_detail'),
 
     # Botiga marca list, ex.: /icommerce/botigas/1/marcas.json
     url(r'^botigas/(?P<pkb>\d+)/marcas\.(?P<extension>(json|xml))$',MarcaList.as_view(),name='marca_list'),
+
+    # Botiga ciutat list, ex.: /icommerce/botigas/1/ciutats.json
+    url(r'^botigas/(?P<pkb>\d+)/ciutats\.(?P<extension>(json|xml))$', CiutatList.as_view(),name='ciutat_list'),
+
+    # Botiga ciutat details, ex.:  /icommerce/botigas/1/ciutats/1.json
+    url(r'^botigas/(?P<pkb>\d+)/ciutats/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',CiutatDetail.as_view(),
+        name='ciutat_detail'),
 
     # Botiga marca details, ex.:  /icommerce/botigas/1/marcas/1.json
     url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',MarcaDetail.as_view(),
@@ -27,7 +34,7 @@ urlpatterns = patterns('',
     url(r'^botigas/(?P<pkb>\d+)/pesas\.(?P<extension>(json|xml))$', PesaRobaList.as_view(),
         name='pesa_list'),
 
-    #Botiga marca pesa details, ex.:     /icommerce/botigas/1/marcas/1/pesas/1.json
+    #Botiga marca pesa details, ex.: /icommerce/botigas/1/marcas/1/pesas/1.json
     url(r'^botigas/(?P<pkb>\d+)/pesas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
         PesaRobaDetail.as_view(),name='pesa_detail'),
 )

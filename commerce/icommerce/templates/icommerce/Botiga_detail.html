@@ -18,18 +18,14 @@ th, td {
 			<td><b>nomBotiga</b></td>
 			<td><b>tipus</b></td>
 			<td><b>id</b></td>
-			<td><b>adressa</b></td>
             <td><b>user</b></td>
-            <td><b>ciutat</b></td>
             <td><b>date</b></td>
 		</thead>
 <tr>
     <td>{{botiga.nom_botiga }}</td>
     <td>{{botiga.tipus_botiga}}</td>
     <td>{{botiga.id}}</td>
-    <td>{{botiga.adressa}}</td>
     <td>{{botiga.user}}</td>
-    <td>{{botiga.ciutat}}</td>
     <td>{{botiga.date}}</td>
 </tr>
 </table>
@@ -57,13 +53,18 @@ th, td {
     {% empty %}<li>Disculpa,encara no hi ha peces d'aquesta marca en aquesta botiga.</li>
     {% endfor %}
 
+    <h2>Ciutats</h2>
+
+
+    {% for ciutat in botiga.ciutats.all %}
+        <li><a href="{% url 'icommerce:ciutat_detail' botiga.id ciutat.id 'html' %}">
+            {{ciutat.id}}-{{ ciutat.nom_ciutat }}</a></li>
+
+    {% empty %}<li>Disculpa no esta en cap ciutat la botiga</li>
 
 
 
-
-
-
-
+    {% endfor %}
 
 </body>
 {% endblock %}

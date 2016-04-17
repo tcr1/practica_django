@@ -75,8 +75,8 @@ class MarcaDetail(DetailView, ConnegResponseMixin):
 class PesaRobaList(ListView, ConnegResponseMixin):
     model = Pesa
     queryset =  Pesa.objects.all()
-    context_object_name = 'latest_pesa_list'
-    template_name = 'icommerce/Pesa_list.html'
+    #context_object_name = 'latest_pesa_list'
+    #template_name = 'icommerce/Pesa_list.html'
 
     def get_queryset(self):
         peces = Pesa.objects.filter(botigas=self.kwargs['pkb'])
@@ -88,4 +88,22 @@ class PesaRobaDetail(DetailView, ConnegResponseMixin):
 
     def get_context_data(self, **kwargs):
         context = super(PesaRobaDetail, self).get_context_data(**kwargs)
+        return context
+
+class CiutatList(ListView, ConnegResponseMixin):
+    model = Ciutat
+    #queryset = Ciutat.objects.all()#filter(date__lte=timezone.now()).order_by('date')[:5]
+    #context_object_name = 'latest_ciutat_list'
+    template_name = 'icommerce/Ciutat_list.html'
+
+    def get_queryset(self):
+        ciutats = Ciutat.objects.all()#filter(botigas=self.kwargs['pkb'])
+        return ciutats
+
+class CiutatDetail(DetailView, ConnegResponseMixin):
+    model = Ciutat
+    template_name = 'icommerce/Ciutat_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CiutatDetail, self).get_context_data(**kwargs)
         return context

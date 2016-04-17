@@ -4,30 +4,30 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from datetime import date
 # Create your models here.
-
-class Ciutat(models.Model):
-    nom_ciutat = models.TextField()
-    moneda = models.TextField(default="euro")
-
-    def __unicode__(self):
-        return u"%s" % self.nom_ciutat
-
-    def get_absolute_url(self):
-        return reverse('icommerce:ciutat_detail', kwargs={'pk': self.pk,'extension': 'html'})
-
 class Botiga (models.Model):
     nom_botiga=models.TextField(blank=True, null=True)
     tipus_botiga=models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
-    adressa=models.TextField(blank=True, null=True)
-    ciutat= models.ForeignKey(Ciutat, null=True, related_name='ciutats')
+    #ciutat= models.ForeignKey(Ciutat, null=True, related_name='ciutats')
     date = models.DateField(default=date.today)
 
     def __unicode__(self):
         return u"%s" % self.nom_botiga
 
     def get_absolute_url(self):
-        return reverse('icommerce:botiga_detail', kwargs={'pkc': self.ciutat.pk,'pk': self.pk, 'extension': 'html'})
+        return reverse('icommerce:botiga_detail', kwargs={'pk': self.pk, 'extension': 'html'})
+
+class Ciutat(models.Model):
+    nom_ciutat = models.TextField()
+    adressa = models.TextField(blank=True, null=True)
+    moneda = models.TextField(default="euro")
+    botiga_ciutat = models.ManyToManyField(Botiga, null=True, related_name='ciutats')
+
+    def __unicode__(self):
+        return u"%s" % self.nom_ciutat
+
+    def get_absolute_url(self):
+        return reverse('icommerce:ciutat_detail', kwargs={'pkb': self.botiga_ciutat.pk, 'pk':self.pk, 'extension': 'html'})
 
 class Marca(models.Model):
     nom_marca = models.TextField(blank=True, null=True)
