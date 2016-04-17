@@ -36,23 +36,34 @@ th, td {
 
 <h2>Marcas</h2>
 
-<ul>
+
     {% for marca in botiga.marcas.all %}
         <li><a href="{% url 'icommerce:marca_detail' botiga.id marca.id 'html' %}">
             {{marca.id}}-{{ marca.nom_marca }}</a></li>
-</ul>
 
-<h2> Peces </h2>
+    {% empty %}<li>Disculpa,aquesta marca no esta diponible en aquest botiga.</li>
 
-    {% for pesa in marca.marca.all %}
-        <dd><li><a href="{% url 'icommerce:pesa_detail'  botiga.id marca.id pesa.id 'html' %}">
+
+
+    {% endfor %}
+
+    <h2>Peces</h2>
+
+    {% for pesa in botiga.botigpesas.all %}
+
+        <li><a href="{% url 'icommerce:pesa_detail' botiga.id pesa.id 'html' %}">
             {{pesa.id}}-{{ pesa.nom_pesa }}</a></li>
 
     {% empty %}<li>Disculpa,encara no hi ha peces d'aquesta marca en aquesta botiga.</li>
     {% endfor %}
 
-    {% empty %}<li>Disculpa,aquesta marca no esta diponible en aquest botiga.</li>
-    {% endfor %}
-</ul>
+
+
+
+
+
+
+
+
 </body>
 {% endblock %}

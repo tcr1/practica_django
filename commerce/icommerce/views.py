@@ -61,7 +61,7 @@ class MarcaList(ListView, ConnegResponseMixin):
     queryset =  Marca.objects.all()
 
     def get_queryset(self):
-        marques = Marca.objects.filter(botiga=self.kwargs['pkb'])
+        marques = Marca.objects.filter(botigas=self.kwargs['pkb'])
         return marques
 
 class MarcaDetail(DetailView, ConnegResponseMixin):
@@ -79,7 +79,7 @@ class PesaRobaList(ListView, ConnegResponseMixin):
     template_name = 'icommerce/Pesa_list.html'
 
     def get_queryset(self):
-        peces = Pesa.objects.filter(botiga_pesa=self.kwargs['pkb'], marca_pesa=self.kwargs['pkm'])
+        peces = Pesa.objects.filter(botigas=self.kwargs['pkb'])
         return peces
 
 class PesaRobaDetail(DetailView, ConnegResponseMixin):

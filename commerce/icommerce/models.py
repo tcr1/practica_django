@@ -33,15 +33,15 @@ class Marca(models.Model):
     nom_marca = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     descripcio = models.TextField(blank=True, null=True)
-    botiga = models.ForeignKey(Botiga,null=True,related_name='marcas')
+    #botiga = models.ForeignKey(Botiga,null=True,related_name='marcas')
     date = models.DateField(default=date.today)
-    botigas = models.ManyToManyField(Botiga)
+    botigas = models.ManyToManyField(Botiga,null=True,related_name='marcas')
 
     def __unicode__(self):
         return u"%s" % self.nom_marca
 
     def get_absolute_url(self):
-        return reverse('icommerce:marca_detail', kwargs={'pkb': self.botiga.pk,'pk': self.pk, 'extension': 'html'})
+        return reverse('icommerce:marca_detail', kwargs={'pkb': self.botigas.pk,'pk': self.pk, 'extension': 'html'})
 
 
 class Pesa(models.Model):
@@ -57,15 +57,15 @@ class Pesa(models.Model):
     talla = models.PositiveSmallIntegerField('TALLA', blank=False, default=1, choices=RATING_TALLES)
     preu = models.DecimalField('Preu',max_digits=8,decimal_places=2,blank=True,null=True)
     descripcio = models.TextField(blank=True,null=True)
-    botiga_pesa = models.ForeignKey(Botiga, null=True, related_name='botigpesas')
-    marca_pesa = models.ForeignKey(Marca, null=True, related_name='marca')
+    #botiga_pesa = models.ForeignKey(Botiga, null=True, related_name='botigpesas')
+    #marca_pesa = models.ForeignKey(Marca, null=True, related_name='marca')
     user = models.ForeignKey(User, default=1)
-    marcas=models.ManyToManyField(Marca)
-    botigas=models.ManyToManyField(Botiga)
+    #marcas=models.ManyToManyField(Marca)
+    botigas=models.ManyToManyField(Botiga,null=True, related_name='botigpesas')
 
     def __unicode__(self):
         return u"%s" % self.nom_pesa
 
     def get_absolute_url(self):
-        return reverse('icommerce:pesa_detail', kwargs={'pkb': self.botiga_pesa, 'pkm': self.marca_pesa.pk, 'pk':self.pk,
+        return reverse('icommerce:pesa_detail', kwargs={'pkb': self.botigas, """'pkm': self.marca_pesa.pk""" 'pk':self.pk,
                                                         'extension': 'html' })

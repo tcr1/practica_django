@@ -24,11 +24,11 @@ urlpatterns = patterns('',
         name='marca_detail'),
 
     #Botiga marca pesa list, ex; /icommerce/botigas/1/marcas/1/pesas.json
-    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pkm>\d+)/pesas\.(?P<extension>(json|xml))$', PesaRobaList.as_view(),
+    url(r'^botigas/(?P<pkb>\d+)/pesas\.(?P<extension>(json|xml))$', PesaRobaList.as_view(),
         name='pesa_list'),
 
     #Botiga marca pesa details, ex.:     /icommerce/botigas/1/marcas/1/pesas/1.json
-    url(r'^botigas/(?P<pkb>\d+)/marcas/(?P<pkm>\d+)/pesas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
+    url(r'^botigas/(?P<pkb>\d+)/pesas/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
         PesaRobaDetail.as_view(),name='pesa_detail'),
 )
 
