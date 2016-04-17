@@ -1,10 +1,7 @@
-
-
-
+{% extends "icommerce/base.html" %}
 {% block content %}
 <h1>
     Botigues
-        {% if user %}(<a href="{% url 'icommerce:botiga_create' %}">add</a>){% endif %}
 </h1>
 <ul>
   <ul>

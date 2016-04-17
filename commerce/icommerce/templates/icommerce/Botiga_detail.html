@@ -1,11 +1,58 @@
+{% extends "icommerce/base.html" %}
+{% block content %}
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+th, td {
+	padding: 5px;
+}
+</style>
+</head>
+<body>
 
 <h2>Botiga details:</h2>
+<table style="width: 100%">
+		<thead>
+			<td><b>nomBotiga</b></td>
+			<td><b>tipus</b></td>
+			<td><b>id</b></td>
+			<td><b>adressa</b></td>
+            <td><b>user</b></td>
+            <td><b>ciutat</b></td>
+            <td><b>date</b></td>
+		</thead>
+<tr>
+    <td>{{botiga.nom_botiga }}</td>
+    <td>{{botiga.tipus_botiga}}</td>
+    <td>{{botiga.id}}</td>
+    <td>{{botiga.adressa}}</td>
+    <td>{{botiga.user}}</td>
+    <td>{{botiga.ciutat}}</td>
+    <td>{{botiga.date}}</td>
+</tr>
+</table>
+
+<h2>Marcas</h2>
+
 <ul>
-    <li>{{ botiga.nom_botiga }}</li>
-    <li>{{botiga.tipus_botiga}}</li>
-    <li>{{botiga.id_botiga}}</li>
-    <li>{{botiga.adressa}}</li>
-    <li>{{botiga.user}}</li>
-    <li>{{botiga.date}}</li>
+    {% for marca in botiga.marcas.all %}
+        <li><a href="{% url 'icommerce:marca_detail' botiga.id marca.id 'html' %}">
+            {{marca.id}}-{{ marca.nom_marca }}</a></li>
 </ul>
 
+<h2> Peces </h2>
+
+    {% for pesa in marca.marca.all %}
+        <dd><li><a href="{% url 'icommerce:pesa_detail'  botiga.id marca.id pesa.id 'html' %}">
+            {{pesa.id}}-{{ pesa.nom_pesa }}</a></li>
+
+    {% empty %}<li>Disculpa,encara no hi ha peces d'aquesta marca en aquesta botiga.</li>
+    {% endfor %}
+
+    {% empty %}<li>Disculpa,aquesta marca no esta diponible en aquest botiga.</li>
+    {% endfor %}
+</ul>
+</body>
+{% endblock %}
