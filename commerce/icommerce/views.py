@@ -3,6 +3,7 @@ from django.core import serializers
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
+from django.views.generic.edit import CreateView
 from django.template.loader import get_template
 from django.template import Context
 from forms import *
@@ -44,7 +45,7 @@ class ConnegResponseMixin(TemplateResponseMixin):
 
 class BotigaList(ListView, ConnegResponseMixin):
     model = Botiga
-    queryset = Botiga.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
+    queryset = Botiga.objects.filter(date__lte=timezone.now()).order_by('date')
     context_object_name = 'latest_botiga_list'
     template_name = 'icommerce/Botiga_list.html'
 
@@ -55,6 +56,15 @@ class BotigaDetail(DetailView, ConnegResponseMixin):
     def get_context_data(self, **kwargs):
         context = super(BotigaDetail, self).get_context_data(**kwargs)
         return context
+
+class BotigaCreate(CreateView):
+    model = Botiga
+    template_name = 'icommerce/form.html'
+    form_class = BotigaForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(BotigaCreate, self).form_valid(form)
 
 class MarcaList(ListView, ConnegResponseMixin):
     model =Marca
@@ -71,6 +81,17 @@ class MarcaDetail(DetailView, ConnegResponseMixin):
     def get_context_data(self, **kwargs):
         context = super(MarcaDetail, self).get_context_data(**kwargs)
         return context
+
+class MarcaCreate(CreateView):
+    model = Marca
+    template_name = 'icommerce/form.html'
+    form_class = MarcaForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.botigas = Botiga.objects.get(id=self.kwargs['pkb'])
+        return super(MarcaCreate, self).form_valid(form)
+
 
 class PesaRobaList(ListView, ConnegResponseMixin):
     model = Pesa

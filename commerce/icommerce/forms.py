@@ -9,4 +9,10 @@ class BotigaForm(ModelForm):
 class MarcaForm(ModelForm):
     class Meta:
         model = Marca
+        exclude = ('user', 'date',)
+
+
+class CiutatForm(ModelForm):
+    class Meta:
+        model = Ciutat
         exclude = ('user', 'date', 'botiga',)

@@ -44,6 +44,7 @@ class Marca(models.Model):
         return reverse('icommerce:marca_detail', kwargs={'pkb': self.botigas.pk,'pk': self.pk, 'extension': 'html'})
 
 
+
 class Pesa(models.Model):
     nom_pesa = models.TextField(blank=True, null=True)
     RATING_TIPUS= ((1,'Pantalo'),(2,'Jersei'),(3,'Blusa'),(4,'Camiseta'),(5,'Jaqueta'),(6,'Roba_interior'),(7,'Short'),
