@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse_lazy
 from django.utils import timezone
 from django.core import serializers
 from django.http import HttpResponseRedirect, HttpResponse
@@ -67,12 +68,8 @@ class BotigaCreate(CreateView):
         return super(BotigaCreate, self).form_valid(form)
 
 class MarcaList(ListView, ConnegResponseMixin):
-    model =Marca
-    queryset =  Marca.objects.all()
-
-    def get_queryset(self):
-        marques = Marca.objects.filter(botigas=self.kwargs['pkb'])
-        return marques
+    model = Marca
+    queryset = Marca.objects.all()
 
 class MarcaDetail(DetailView, ConnegResponseMixin):
     model = Marca
@@ -88,8 +85,13 @@ class MarcaCreate(CreateView):
     form_class = MarcaForm
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.botigas = Botiga.objects.get(id=self.kwargs['pkb'])
+        marca = form.save(commit=False)
+        marca.user = self.request.user
+        marca.save()
+        noms_botigues = form.cleaned_data['botigas']
+        for nom_botiga in noms_botigues:
+            botiga = Botiga.objects.get(nom_botiga=nom_botiga)
+            form.instance.botigas.add(botiga)
         return super(MarcaCreate, self).form_valid(form)
 
 
