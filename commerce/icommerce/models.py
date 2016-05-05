@@ -41,7 +41,7 @@ class Marca(models.Model):
         return u"%s" % self.nom_marca
 
     def get_absolute_url(self):
-        return reverse('icommerce:marca_detail', kwargs={'pkb': self.botigas.pk,'pk': self.pk, 'extension': 'html'})
+        return reverse('icommerce:marca_detail', kwargs={'pk': self.pk, 'extension': 'html'})
 
 
 
