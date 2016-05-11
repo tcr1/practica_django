@@ -19,7 +19,7 @@ class Botiga (models.Model):
 
 class Ciutat(models.Model):
     nom_ciutat = models.TextField()
-    adressa = models.TextField(blank=True, null=True)
+    calle = models.TextField(blank=True, null=True)
     moneda = models.TextField(default="euro")
     botiga_ciutat = models.ManyToManyField(Botiga, null=True, related_name='ciutats')
 
@@ -27,7 +27,7 @@ class Ciutat(models.Model):
         return u"%s" % self.nom_ciutat
 
     def get_absolute_url(self):
-        return reverse('icommerce:ciutat_detail', kwargs={'pkb': self.botiga_ciutat.pk, 'pk':self.pk, 'extension': 'html'})
+        return reverse('icommerce:ciutat_detail', kwargs={'pk':self.pk, 'extension': 'html'})
 
 class Marca(models.Model):
     nom_marca = models.TextField(blank=True, null=True)
@@ -68,5 +68,4 @@ class Pesa(models.Model):
         return u"%s" % self.nom_pesa
 
     def get_absolute_url(self):
-        return reverse('icommerce:pesa_detail', kwargs={'pkb': self.botigas, """'pkm': self.marca_pesa.pk""" 'pk':self.pk,
-                                                        'extension': 'html' })
+        return reverse('icommerce:pesa_detail', kwargs={'pk': self.pk,'extension': 'html' })

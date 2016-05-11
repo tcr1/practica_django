@@ -113,6 +113,22 @@ class PesaRobaDetail(DetailView, ConnegResponseMixin):
         context = super(PesaRobaDetail, self).get_context_data(**kwargs)
         return context
 
+
+class PesaCreate(CreateView):
+    model = Pesa
+    template_name = 'icommerce/form.html'
+    form_class = PesaForm
+
+    def form_valid(self, form):
+        pesa = form.save(commit=False)
+        pesa.user = self.request.user
+        pesa.save()
+        noms_botigues = form.cleaned_data['botigas']
+        for nom_botiga in noms_botigues:
+            botiga = Botiga.objects.get(nom_botiga=nom_botiga)
+            form.instance.botigas.add(botiga)
+        return super(PesaCreate, self).form_valid(form)
+
 class CiutatList(ListView, ConnegResponseMixin):
     model = Ciutat
     #queryset = Ciutat.objects.all()#filter(date__lte=timezone.now()).order_by('date')[:5]
@@ -130,3 +146,12 @@ class CiutatDetail(DetailView, ConnegResponseMixin):
     def get_context_data(self, **kwargs):
         context = super(CiutatDetail, self).get_context_data(**kwargs)
         return context
+
+class CiutatCreate(CreateView):
+    model = Ciutat
+    template_name = 'icommerce/form.html'
+    form_class = CiutatForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CiutatCreate, self).form_valid(form)

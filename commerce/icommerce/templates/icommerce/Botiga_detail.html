@@ -47,7 +47,7 @@ th, td {
 
     {% for pesa in botiga.botigpesas.all %}
 
-        <li><a href="{% url 'icommerce:pesa_detail' botiga.id pesa.id 'html' %}">
+        <li><a href="{% url 'icommerce:pesa_detail' pesa.id 'html' %}">
             {{pesa.id}}-{{ pesa.nom_pesa }}</a></li>
 
     {% empty %}<li>Disculpa,encara no hi ha peces d'aquesta marca en aquesta botiga.</li>
@@ -57,12 +57,10 @@ th, td {
 
 
     {% for ciutat in botiga.ciutats.all %}
-        <li><a href="{% url 'icommerce:ciutat_detail' botiga.id ciutat.id 'html' %}">
+        <li><a href="{% url 'icommerce:ciutat_detail' ciutat.id 'html' %}">
             {{ciutat.id}}-{{ ciutat.nom_ciutat }}</a></li>
 
-    {% empty %}<li>Disculpa no esta en cap ciutat la botiga</li>
-
-
+    {% empty %}<li>Disculpa,la botiga no esta en cap ciutat.</li>
 
     {% endfor %}
 
