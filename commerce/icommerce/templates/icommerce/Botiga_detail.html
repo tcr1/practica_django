@@ -12,7 +12,17 @@ th, td {
 </head>
 <body>
 
-<h2>Botiga details:</h2>
+<h1>
+    {{botiga.nom_botiga }}
+    {% if user == botiga.user %}
+        (<a href="{% url 'icommerce:botiga_edit' botiga.id %}">edit</a>)
+    {% endif %}
+</h1>
+
+<h2>Botiga details:
+
+</h2>
+
 <table style="width: 100%">
 		<thead>
 			<td><b>nomBotiga</b></td>

@@ -20,6 +20,10 @@ urlpatterns = patterns('',
     # Crea una botiga , /icommerce/botigas/create/
     url(r'^botigas/create/$', BotigaCreate.as_view(), name='botiga_create'),
 
+    # Edit botiga details, ex.:/icommerce/botigas/id/edit
+    url(r'^botigas/(?P<pk>\d+)/edit/$',UpdateView.as_view(model=Botiga,template_name='icommerce/form.html',
+                                                              form_class=BotigaForm),name='botiga_edit'),
+
 
     #CIUTAT
     #ciutat list, ex.: /icommerce/ciutats.json
