@@ -12,7 +12,15 @@ th, td {
 </head>
 
 <body>
-<h2>Marca details:</h2>
+
+<h1>
+    {{marca.nom_marca }}
+    {% if user == marca.user %}
+        (<a href="{% url 'icommerce:marca_edit' marca.id %}">edit</a>)
+    {% endif %}
+</h1>
+
+<h2>Details:</h2>
 <table style="width: 100%">
 		<thead>
 			<td><b>Id Marca</b></td>

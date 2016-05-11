@@ -22,6 +22,7 @@ class Ciutat(models.Model):
     calle = models.TextField(blank=True, null=True)
     moneda = models.TextField(default="euro")
     botiga_ciutat = models.ManyToManyField(Botiga, null=True, related_name='ciutats')
+    user = models.ForeignKey(User, default=1)
 
     def __unicode__(self):
         return u"%s" % self.nom_ciutat

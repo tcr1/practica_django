@@ -34,6 +34,9 @@ urlpatterns = patterns('',
         name='ciutat_detail'),
     # Crea una ciutat , /icommerce/botigas/create/
     url(r'^ciutats/create/$', CiutatCreate.as_view(), name='ciutat_create'),
+    # Edit ciutats details, ex.:/icommerce/ciutats/id/edit
+    url(r'^cuitats/(?P<pk>\d+)/edit/$',UpdateView.as_view(model=Ciutat, template_name='icommerce/form.html',
+                                                        form_class=CiutatForm), name='ciutat_edit'),
 
 
     #MARCA
@@ -44,6 +47,10 @@ urlpatterns = patterns('',
         name='marca_detail'),
     # Crea una marca , ex.: /icommerce/marcas/create/
     url(r'^marcas/create/$', MarcaCreate.as_view(),name='marca_create'),
+
+    # Edit marca details, ex.:/icommerce/marcas/id/edit
+    url(r'^marcas/(?P<pk>\d+)/edit/$',UpdateView.as_view(model=Marca, template_name='icommerce/form.html',
+                                                          form_class=MarcaForm), name='marca_edit'),
 
 
     #PESA
@@ -56,6 +63,10 @@ urlpatterns = patterns('',
 
     # Crea una pesa , ex.: /icommerce/pesas/create/
     url(r'^pesas/create/$', PesaCreate.as_view(), name='pesa_create'),
+
+    # Edit pesa details, ex.:/icommerce/pesas/id/edit
+     url(r'^pesas/(?P<pk>\d+)/edit/$',UpdateView.as_view(model=Pesa, template_name='icommerce/form.html',
+                                              form_class=PesaForm), name='pesa_edit'),
 )
 
 
