@@ -1,13 +1,18 @@
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.utils import timezone
 from django.core import serializers
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.edit import CreateView
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from django.template.loader import get_template
 from django.template import Context
 from forms import *
+
+#from rest_framework import generics, permissions
 
 def mainpage(request):
     template = get_template('mainpage.html')
@@ -43,6 +48,25 @@ class ConnegResponseMixin(TemplateResponseMixin):
             elif self.kwargs['extension'] == 'xml':
                 return self.render_xml_object_response(objects=objects)
         return super(ConnegResponseMixin, self).render_to_response(context)
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+class CheckIsOwnerMixin(object):
+    def get_object(self, *args, **kwargs):
+        obj = super(CheckIsOwnerMixin, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise PermissionDenied
+        return obj
+
+class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'icommerce/form.html'
+
+class LoginRequiredCheckIsOwnerDeleteView(LoginRequiredMixin, CheckIsOwnerMixin, DeleteView):
+    template_name = 'icommerce/delete_form.html'
+    success_url = "/"
 
 class BotigaList(ListView, ConnegResponseMixin):
     model = Botiga
@@ -155,3 +179,14 @@ class CiutatCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(CiutatCreate, self).form_valid(form)
+
+@login_required()
+def review(request, pk):
+    restaurant = get_object_or_404(Restaurant, pk=pk)
+    review = RestaurantReview(
+        rating=request.POST['rating'],
+        comment=request.POST['comment'],
+        user=request.user,
+        restaurant=restaurant)
+    review.save()
+    return HttpResponseRedirect(reverse('myrestaurants:restaurant_detail', args=(restaurant.id,)))

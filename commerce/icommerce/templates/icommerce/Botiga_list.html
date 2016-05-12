@@ -5,14 +5,13 @@ Botigues
     {% if user %}
         (<a href="{% url 'icommerce:botiga_create' %}">add</a>)
     {% endif %}
-
 </h1>
 <ul>
   <ul>
     {% for botiga in latest_botiga_list  %}
         <li><a href="{% url 'icommerce:botiga_detail' botiga.id 'html' %}">
           {{botiga.id}}-{{ botiga.nom_botiga }}</a></li>
-    {% empty %}<li>Sorry, no botiga registered yet.</li>
+        {% empty %}<li>Disculpa,la botiga no esta regristrat.</li>
     {% endfor %}
     </ul>
 </ul>

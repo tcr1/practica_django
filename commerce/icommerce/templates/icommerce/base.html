@@ -8,19 +8,24 @@
 <body>
 <div id="header">
     {% block header %}
-        <ul><a href="/icommerce">Home</a></ul>
-        {% if user.username %}<p>User {{ user.username }}</p><p><a href="/logout/">logout</a></p>
-        {% else %}<p><a href="/login/">Sign in</a></p>{% endif %}
+        {% if user.username %}
+            <p>User: {{ user.username }}  <a href="/logout/">logout</a></p>
+        {% else %}
+             <p><a href="/login/">Sign in</a></p>{% endif %}
     {% endblock %}
 </div>
+
 <div id="sidebar">
-    {% block sidebar %}{% endblock %}
+    {% block sidebar %}<p><ul><li><a href="/icommerce">Home</a></li></ul></p><br/>{% endblock %}
 </div>
 <div id="content">
     {% block content %}
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
     {% endblock %}
 </div>
+
 <div id="footer">{% block footer %}{% endblock %}</div>
 </body>
 </html>

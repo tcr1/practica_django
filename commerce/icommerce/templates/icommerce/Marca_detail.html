@@ -17,10 +17,11 @@ th, td {
     {{marca.nom_marca }}
     {% if user == marca.user %}
         (<a href="{% url 'icommerce:marca_edit' marca.id %}">edit</a>)
+        (<a href="{% url 'icommerce:marca_delete' marca.id %}">delete</a>)
     {% endif %}
 </h1>
 
-<h2>Details:</h2>
+<h2>Detalls:</h2>
 <table style="width: 100%">
 		<thead>
 			<td><b>Id Marca</b></td>
@@ -38,12 +39,14 @@ th, td {
     </tr>
 </table>
 
-<h2>Botigues</h2>
+<h2>També podem trobar "{{ object }}" en aquestes altres botigues:</h2>
 
 
 {% for botiga in marca.botigas.all %}
+    {% if marca.marcas != botiga.id %} #Acabar de puliiiiiiiiiiiiiiiiir
     <li><a href="{% url 'icommerce:botiga_detail' botiga.id 'html' %}">
         {{botiga.id}}-{{ botiga.nom_botiga }}</a></li>
+    {% endif %}
 
 {% empty %}<li>Disculpa, aquesta marca no està diponible a cap botiga.</li>
 

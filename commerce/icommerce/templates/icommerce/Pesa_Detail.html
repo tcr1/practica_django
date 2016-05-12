@@ -16,6 +16,7 @@ th, td {
     {{pesa.nom_pesa }}
     {% if user == pesa.user %}
         (<a href="{% url 'icommerce:pesa_edit' pesa.id %}">edit</a>)
+        (<a href="{% url 'icommerce:pesa_delete' pesa.id %}">delete</a>)
     {% endif %}
 </h1>
 <h2>Details:</h2>

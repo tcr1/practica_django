@@ -7,13 +7,14 @@
 }
 #content
 {
+    margin-top: 50px;
     margin-left: 25px;
     padding: 20px;
 
 }
 #sidebar
 {
-    margin: 50;
+    margin-bottem:200px;
     float: left;
     width: 50px;
 }

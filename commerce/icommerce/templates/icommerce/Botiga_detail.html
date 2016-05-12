@@ -16,12 +16,11 @@ th, td {
     {{botiga.nom_botiga }}
     {% if user == botiga.user %}
         (<a href="{% url 'icommerce:botiga_edit' botiga.id %}">edit</a>)
+        (<a href="{% url 'icommerce:botiga_delete' botiga.id %}">delete</a>)
     {% endif %}
 </h1>
 
-<h2>Details:
-
-</h2>
+<h2>Detalls:</h2>
 
 <table style="width: 100%">
 		<thead>
@@ -40,7 +39,13 @@ th, td {
 </tr>
 </table>
 
-<h2>Marcas</h2>
+<h1>
+Marques
+    {% if user %}
+        (<a href="{% url 'icommerce:marca_create' %}">add</a>)
+
+    {% endif %}
+</h1>
 
 
     {% for marca in botiga.marcas.all %}
@@ -52,8 +57,13 @@ th, td {
 
 
     {% endfor %}
+<h1>
+Peces
+    {% if user %}
+        (<a href="{% url 'icommerce:pesa_create' %}">add</a>)
+    {% endif %}
+</h1>
 
-    <h2>Peces</h2>
 
     {% for pesa in botiga.botigpesas.all %}
 
@@ -63,7 +73,13 @@ th, td {
     {% empty %}<li>Disculpa,encara no hi ha peces d'aquesta marca en aquesta botiga.</li>
     {% endfor %}
 
-    <h2>Ciutats</h2>
+ <h1>
+Ciutats
+    {% if user %}
+        (<a href="{% url 'icommerce:ciutat_create' %}">add</a>)
+    {% endif %}
+</h1>
+
 
 
     {% for ciutat in botiga.ciutats.all %}
