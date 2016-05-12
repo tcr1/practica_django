@@ -50,6 +50,7 @@ class ConnegResponseMixin(TemplateResponseMixin):
         return super(ConnegResponseMixin, self).render_to_response(context)
 
 class LoginRequiredMixin(object):
+
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
