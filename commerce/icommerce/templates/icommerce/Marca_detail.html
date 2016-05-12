@@ -20,7 +20,7 @@ th, td {
     {% endif %}
 </h1>
 
-<h2>Details:</h2>
+<h2>Detalls:</h2>
 <table style="width: 100%">
 		<thead>
 			<td><b>Id Marca</b></td>
@@ -37,22 +37,6 @@ th, td {
         <td>{{marca.date}}</td>
     </tr>
 </table>
-
-<h2>Botigues</h2>
-
-
-{% for botiga in marca.botigas.all %}
-    <li><a href="{% url 'icommerce:botiga_detail' botiga.id 'html' %}">
-        {{botiga.id}}-{{ botiga.nom_botiga }}</a></li>
-
-{% empty %}<li>Disculpa, aquesta marca no està diponible a cap botiga.</li>
-
-
-
-{% endfor %}
-
-
-
 </body>
 {% endblock %}
 
