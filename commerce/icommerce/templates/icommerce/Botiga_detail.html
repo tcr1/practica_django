@@ -1,94 +1,107 @@
 {% extends "icommerce/base.html" %}
 {% block content %}
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-th, td {
-	padding: 5px;
-}
-</style>
-</head>
+<head></head>
 <body>
 
-<h1>
-    {{botiga.nom_botiga }}
-    {% if user == botiga.user %}
-        (<a href="{% url 'icommerce:botiga_edit' botiga.id %}">edit</a>)
-        (<a href="{% url 'icommerce:botiga_delete' botiga.id %}">delete</a>)
-    {% endif %}
-</h1>
+    <h1>
+        {{botiga.nom_botiga }}
+        {% if user == botiga.user %}
+            (<a href="{% url 'icommerce:botiga_edit' botiga.id %}">Edita</a>)
+            (<a href="{% url 'icommerce:botiga_delete' botiga.id %}">Esborra</a>)
+        {% endif %}
+    </h1>
 
-<h2>Detalls:</h2>
+    <h2>Detalls botiga "{{ object }}":</h2>
 
-<table style="width: 100%">
-		<thead>
-			<td><b>nomBotiga</b></td>
-			<td><b>tipus</b></td>
-			<td><b>id</b></td>
-            <td><b>user</b></td>
-            <td><b>date</b></td>
-		</thead>
-<tr>
-    <td>{{botiga.nom_botiga }}</td>
-    <td>{{botiga.tipus_botiga}}</td>
-    <td>{{botiga.id}}</td>
-    <td>{{botiga.user}}</td>
-    <td>{{botiga.date}}</td>
-</tr>
-</table>
+    <table>
+        <thead>
+            <td><b>Identificador Botiga</b></td>
+            <td><b>Nom botiga</b></td>
+            <td><b>Tipus</b></td>
+            <td><b>Usuari</b></td>
+            <td><b>Data</b></td>
+        </thead>
+        <tr>
+            <td>{{botiga.id}}</td>
+            <td>{{botiga.nom_botiga }}</td>
+            <td>{{botiga.tipus_botiga}}</td>
+            <td>{{botiga.user}}</td>
+            <td>{{botiga.date}}</td>
+        </tr>
+    </table>
 
-<h1>
-Marques
-    {% if user %}
-        (<a href="{% url 'icommerce:marca_create' %}">add</a>)
-
-    {% endif %}
-</h1>
-
-
-    {% for marca in botiga.marcas.all %}
-        <li><a href="{% url 'icommerce:marca_detail' marca.id 'html' %}">
-            {{marca.id}}-{{ marca.nom_marca }}</a></li>
-
-    {% empty %}<li>Disculpa, cap marca diponible en aquesta botiga.</li>
+    <h1>
+    Marques
+        {% if user.is_authenticated %}
+            (<a href="{% url 'icommerce:marca_create' %}">Afegeix</a>)
+        {% endif %}
+    </h1>
 
 
+        {% for marca in botiga.marcas.all %}
+            <li><a href="{% url 'icommerce:marca_detail' marca.id 'html' %}">
+                {{ marca.nom_marca }}</a></li>
 
+        {% empty %}<li>Disculpa, no hi ha cap marca en aquesta botiga.</li>
+        {% endfor %}
+
+    <h1>
+    Peces
+        {% if user.is_authenticated %}
+            (<a href="{% url 'icommerce:pesa_create' %}">Afegeix</a>)
+        {% endif %}
+    </h1>
+
+
+        {% for pesa in botiga.botigpesas.all %}
+
+            <li><a href="{% url 'icommerce:pesa_detail' pesa.id 'html' %}">
+                {{ pesa.nom_pesa }}</a></li>
+
+        {% empty %}<li>Disculpa,encara no hi ha peces en aquesta botiga.</li>
+        {% endfor %}
+
+    <h1>
+    Ciutats
+        {% if user.is_authenticated %}
+            (<a href="{% url 'icommerce:ciutat_create' %}">Afegeix</a>)
+        {% endif %}
+    </h1>
+
+        {% for ciutat in botiga.ciutats.all %}
+            <li><a href="{% url 'icommerce:ciutat_detail' ciutat.id 'html' %}">
+                {{ ciutat.nom_ciutat }}</a></li>
+
+        {% empty %}<li>Disculpa,la botiga no esta en cap ciutat.</li>
+        {% endfor %}
+<h2>Opinions</h2>
+<ul>
+    {% for review in botiga.botigareview_set.all %}
+        <li>
+            <p>{{ review.rating }} star{{ review.rating|pluralize }} <a href="{{ botiga.id }}/reviews/{{  review.id }}/edit/">Edita</a>
+            <a href="{{ botiga.id }}/reviews/{{  review.id }}/delete/">Esborrar</a></p>
+            <p>{{ review.comment }}</p>
+            <p>Creat per : {{ review.user }} a la data {{ review.date }}</p>
+        </li>
+        {% empty %}<li>Disculpa, aquesta botiga no té cap opinio, sigues el primer en fer-ho!.</li>
     {% endfor %}
-<h1>
-Peces
-    {% if user %}
-        (<a href="{% url 'icommerce:pesa_create' %}">add</a>)
-    {% endif %}
-</h1>
+</ul>
+<h3>Afegir puntuació:</h3>
+<form action="{% url 'icommerce:review_create' botiga.id %}" method="post">
+    {% csrf_token %}
+    Opinió: <textarea name="comment" id="comment" rows="4"></textarea>
+    <p>Classificació:</p>
+    <p>{% for rate in RATING_CHOICES %}
+    <input type="radio" name="rating" id="rating{{ forloop.counter }}" value="{{ rate.0 }}" />
+    <label for="choice{{ forloop.counter }}">{{ rate.1 }} estrella{{ rate.0|pluralize }}</label>
+    <br/>{% endfor %}
+    </p>
+    <input type="submit" value="Comenta" />
+</form>
 
 
-    {% for pesa in botiga.botigpesas.all %}
-
-        <li><a href="{% url 'icommerce:pesa_detail' pesa.id 'html' %}">
-            {{pesa.id}}-{{ pesa.nom_pesa }}</a></li>
-
-    {% empty %}<li>Disculpa,encara no hi ha peces d'aquesta marca en aquesta botiga.</li>
-    {% endfor %}
-
- <h1>
-Ciutats
-    {% if user %}
-        (<a href="{% url 'icommerce:ciutat_create' %}">add</a>)
-    {% endif %}
-</h1>
-
-
-
-    {% for ciutat in botiga.ciutats.all %}
-        <li><a href="{% url 'icommerce:ciutat_detail' ciutat.id 'html' %}">
-            {{ciutat.id}}-{{ ciutat.nom_ciutat }}</a></li>
-
-    {% empty %}<li>Disculpa,la botiga no esta en cap ciutat.</li>
-
-    {% endfor %}
-
+{% block footer %}
+{% endblock %}
 </body>
+
 {% endblock %}

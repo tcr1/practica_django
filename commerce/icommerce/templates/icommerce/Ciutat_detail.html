@@ -1,17 +1,10 @@
 {% extends "icommerce/base.html" %}
 {% block content %}
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-th, td {
-	padding: 5px;
-}
-</style>
-</head>
-
+    <head>
+    {% load staticfiles%}
+    </head>
 <body>
+
 <h1>
     {{ciutat.nom_ciutat }}
     {% if user == ciutat.user %}
@@ -19,12 +12,12 @@ th, td {
         (<a href="{% url 'icommerce:ciutat_delete' ciutat.id %}">delete</a>)
     {% endif %}
 </h1>
-<h2>Detalls:</h2>
-<table style="width: 100%">
+<h2>Detalls de la ciutat {{ object }} :</h2>
+<table>
 		<thead>
-			<td><b>Id Ciutat</b></td>
+			<td><b>Identificador Ciutat</b></td>
 			<td><b>Nom</b></td>
-			<td><b>calle</b></td>
+			<td><b>Carrer</b></td>
 			<td><b>Moneda</b></td>
 		</thead>
     <tr>

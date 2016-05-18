@@ -1,11 +1,17 @@
 {% extends "icommerce/base.html" %}
 {% block content %}
-<form method="post" enctype="multipart/form-data" action="">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input type="submit" value="Crea"/>
-        <input type="button" onclick="history.back()" value="Cancel·la"/>
-</form>
+{% load staticfiles %}
+
+    <body>
+        <form method="post" enctype="multipart/form-data" action="" autocomplete="on">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+
+                <input type="submit" value="Crea i/o modifica"/>
+                <input type="button" onclick="history.back()" value="Cancel·la"/>
+        </form>
+    </body>
+
 {% endblock %}

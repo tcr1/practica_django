@@ -1,34 +1,25 @@
 {% extends "icommerce/base.html" %}
 {% block content %}
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-th, td {
-	padding: 5px;
-}
-</style>
+<head>
 </head>
-
 <body>
 <h1>
     {{pesa.nom_pesa }}
     {% if user == pesa.user %}
-        (<a href="{% url 'icommerce:pesa_edit' pesa.id %}">edit</a>)
-        (<a href="{% url 'icommerce:pesa_delete' pesa.id %}">delete</a>)
+        (<a href="{% url 'icommerce:pesa_edit' pesa.id %}">Edita</a>)
+        (<a href="{% url 'icommerce:pesa_delete' pesa.id %}">Esborra</a>)
     {% endif %}
 </h1>
-<h2>Details:</h2>
-<table style="width: 100%">
+<h2>Detalls de la pesa {{ object }}:</h2>
+<table>
     <thead>
         <td><b>Nom pesa</b></td>
         <td><b>Tipus</b></td>
-        <td><b>color</b></td>
-        <td><b>talla</b></td>
-        <td><b>preu</b></td>
-        <td><b>descripcio</b></td>
-        <td><b>user</b></td>
+        <td><b>Color</b></td>
+        <td><b>Talla</b></td>
+        <td><b>Preu</b></td>
+        <td><b>Descripció</b></td>
+        <td><b>Usuari</b></td>
     </thead>
 
     <tr>

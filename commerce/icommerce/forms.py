@@ -1,4 +1,6 @@
 from django.forms import ModelForm
+from django import forms
+from django.contrib.auth.models import User
 from models import *
 
 class BotigaForm(ModelForm):
@@ -20,4 +22,9 @@ class CiutatForm(ModelForm):
 class PesaForm(ModelForm):
     class Meta:
         model = Pesa
+        exclude = ('user', 'date',)
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
         exclude = ('user', 'date',)

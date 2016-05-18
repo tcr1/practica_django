@@ -1,14 +1,6 @@
 {% extends "icommerce/base.html" %}
 {% block content %}
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-th, td {
-	padding: 5px;
-}
-</style>
+<head>
 </head>
 
 <body>
@@ -16,19 +8,19 @@ th, td {
 <h1>
     {{marca.nom_marca }}
     {% if user == marca.user %}
-        (<a href="{% url 'icommerce:marca_edit' marca.id %}">edit</a>)
-        (<a href="{% url 'icommerce:marca_delete' marca.id %}">delete</a>)
+        (<a href="{% url 'icommerce:marca_edit' marca.id %}">Edita</a>)
+        (<a href="{% url 'icommerce:marca_delete' marca.id %}">Esborra</a>)
     {% endif %}
 </h1>
 
-<h2>Detalls:</h2>
-<table style="width: 100%">
+<h2>Detalls de la marca {{ object }}:</h2>
+<table>
 		<thead>
-			<td><b>Id Marca</b></td>
+			<td><b>Identificador Marca</b></td>
 			<td><b>Nom</b></td>
-			<td><b>User</b></td>
-			<td><b>Descripcio</b></td>
-            <td><b>data</b></td>
+			<td><b>Usuari</b></td>
+			<td><b>Descripció</b></td>
+            <td><b>Data</b></td>
 		</thead>
     <tr>
         <td>{{marca.id}}</td>
@@ -39,19 +31,16 @@ th, td {
     </tr>
 </table>
 
-<h2>També podem trobar "{{ object }}" en aquestes altres botigues:</h2>
+<h2> La marca {{ object }} es troba en  botigues:</h2>
 
 
 {% for botiga in marca.botigas.all %}
-    {% if marca.marcas != botiga.id %} #Acabar de puliiiiiiiiiiiiiiiiir
+    {% if marca.marcas != botiga.id %}
     <li><a href="{% url 'icommerce:botiga_detail' botiga.id 'html' %}">
-        {{botiga.id}}-{{ botiga.nom_botiga }}</a></li>
+        {{ botiga.nom_botiga }}</a></li>
     {% endif %}
 
 {% empty %}<li>Disculpa, aquesta marca no està diponible a cap botiga.</li>
-
-
-
 {% endfor %}
 
 

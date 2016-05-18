@@ -1,8 +1,10 @@
 {% extends "icommerce/base.html" %}
 {% block content %}
     <form method="post">{% csrf_token %}
-        Està segur/a que vol esborrar "{{ object }}" ?
-        <input type="submit" value="Esborra" />
+        Està segur/a que vol esborrar la review: "{{ object }}" ?
+
+
+        <input type="submit" href="{% url 'icommerce:botiga_detail' object.botiga.id 'html' %}" value="Esborra" />
         <input type="button" onclick="history.back()" value="Cancel·la"/>
     </form>
 {% endblock %}

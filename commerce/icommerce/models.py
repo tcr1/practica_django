@@ -8,7 +8,6 @@ class Botiga (models.Model):
     nom_botiga=models.TextField(blank=True, null=True)
     tipus_botiga=models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
-    #ciutat= models.ForeignKey(Ciutat, null=True, related_name='ciutats')
     date = models.DateField(default=date.today)
 
     def __unicode__(self):
@@ -21,7 +20,7 @@ class Ciutat(models.Model):
     nom_ciutat = models.TextField()
     calle = models.TextField(blank=True, null=True)
     moneda = models.TextField(default="euro")
-    botiga_ciutat = models.ManyToManyField(Botiga, null=True, related_name='ciutats')
+    botiga_ciutat = models.ManyToManyField(Botiga,related_name='ciutats')
     user = models.ForeignKey(User, default=1)
 
     def __unicode__(self):
@@ -36,7 +35,7 @@ class Marca(models.Model):
     descripcio = models.TextField(blank=True, null=True)
     #botiga = models.ForeignKey(Botiga,null=True,related_name='marcas')
     date = models.DateField(default=date.today)
-    botigas = models.ManyToManyField(Botiga,null=True,related_name='marcas')
+    botigas = models.ManyToManyField(Botiga,related_name='marcas')
 
     def __unicode__(self):
         return u"%s" % self.nom_marca
@@ -59,14 +58,28 @@ class Pesa(models.Model):
     talla = models.PositiveSmallIntegerField('TALLA', blank=False, default=1, choices=RATING_TALLES)
     preu = models.DecimalField('Preu',max_digits=8,decimal_places=2,blank=True,null=True)
     descripcio = models.TextField(blank=True,null=True)
-    #botiga_pesa = models.ForeignKey(Botiga, null=True, related_name='botigpesas')
-    #marca_pesa = models.ForeignKey(Marca, null=True, related_name='marca')
     user = models.ForeignKey(User, default=1)
-    #marcas=models.ManyToManyField(Marca)
-    botigas=models.ManyToManyField(Botiga,null=True, related_name='botigpesas')
+    botigas=models.ManyToManyField(Botiga,related_name='botigpesas')
 
     def __unicode__(self):
         return u"%s" % self.nom_pesa
 
     def get_absolute_url(self):
         return reverse('icommerce:pesa_detail', kwargs={'pk': self.pk,'extension': 'html' })
+
+
+class Review(models.Model):
+    RATING_CHOICES = ((1,'Una'), (2,'Dos'), (3,'Tres'), (4,'Quatre'), (5,'Cinc'))
+    rating = models.PositiveSmallIntegerField('Rating (stars)', blank=False, default=3, choices=RATING_CHOICES)
+    comment = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
+    def __unicode__(self):
+        return "Opinio creada per:"+" " + self.user.username+" amb puntacio: "+str(self.rating)+ " estrelles"+" que conte el comentari: "+  self.comment
+    class Meta:
+        abstract = True
+
+class BotigaReview(Review):
+    botiga = models.ForeignKey(Botiga)
+    def get_absolute_url(self):
+        return '/icommerce/botigas/'+str(self.botiga.id)+'.html'

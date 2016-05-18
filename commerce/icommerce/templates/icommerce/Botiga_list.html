@@ -2,8 +2,8 @@
 {% block content %}
 <h1>
 Botigues
-    {% if user %}
-        (<a href="{% url 'icommerce:botiga_create' %}">add</a>)
+    {% if user.is_authenticated %}
+        (<a href="{% url 'icommerce:botiga_create' %}">Afegeix</a>)
     {% endif %}
 </h1>
 <ul>
@@ -11,7 +11,7 @@ Botigues
     {% for botiga in latest_botiga_list  %}
         <li><a href="{% url 'icommerce:botiga_detail' botiga.id 'html' %}">
           {{botiga.id}}-{{ botiga.nom_botiga }}</a></li>
-        {% empty %}<li>Disculpa,la botiga no esta regristrat.</li>
+        {% empty %}<li>Disculpa,encara no hi ha cap botiga regristrada.</li>
     {% endfor %}
     </ul>
 </ul>

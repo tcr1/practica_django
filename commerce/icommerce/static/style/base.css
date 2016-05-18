@@ -30,3 +30,12 @@ textarea, input[type=number], input[type=url]
     width: 25em;
 }
 
+table {
+
+    width: 50%;
+}
+th, td {
+
+    padding: 5px;
+}
+

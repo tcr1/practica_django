@@ -1,9 +1,11 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import UpdateView
 from django.views.generic.base import RedirectView
 from views import *
-from models import Botiga
+from serializers import *
+
+from rest_framework.urlpatterns import format_suffix_patterns
+
 urlpatterns = patterns('',
     # Home page
     url(r'^$',
@@ -89,6 +91,40 @@ urlpatterns = patterns('',
 
     #Delete Pesa, ex:/icomerce/ciutats/id/delete
     url(r'^pesas/(?P<pk>\d+)/delete/$',LoginRequiredCheckIsOwnerDeleteView.as_view(model=Pesa),name='pesa_delete'),
-)
 
+    # Create a Botiga review using function, ex: /icommerce/botigas/1/reviews/create/
+    url(r'^botigas/(?P<pk>\d+)/reviews/create/$',review,name='review_create'),
+
+    # Edit a Botiga review using function, ex: /icommerce/botigas/1/reviews/1/edit
+
+    url(r'^botigas/(?P<pkr>\d+)/reviews/(?P<pk>\d+)/edit/$', LoginRequiredCheckIsOwnerUpdateView.as_view(model=BotigaReview,
+                                                                                                       form_class=ReviewForm),
+        name='review_edit'),
+
+    # Delete Botiga review using function, ex: /icommerce/botigas/1/reviews/1/delete
+
+    url(r'^botigas/(?P<pkr>\d+)/reviews/(?P<pk>\d+)/delete/$',LoginRequiredCheckIsOwnerDeleteView.as_view(model=BotigaReview,
+                                                                                                           template_name = 'icommerce/delete_review.html',
+                                                                                                           success_url = "/icommerce/botigas.html",),
+        name='review_delete'),
+
+    # RESTful API
+
+    url(r'^api/auth/',include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/users/$', APIUserList.as_view(), name='user-list'),
+    url(r'^api/users/(?P<pk>\d+)/$', APIUserDetail.as_view(), name='user-detail'),
+    url(r'^api/botigas/$',APIBotigaList.as_view(), name='botiga-list'),
+    url(r'^api/botigas/(?P<pk>\d+)/$',APIBotigaDetail.as_view(), name='botiga-detail'),
+    url(r'^api/marcas/$',APIMarcaList.as_view(), name='marca-list'),
+    url(r'^api/marcas/(?P<pk>\d+)/$',APIMarcaDetail.as_view(), name='marca-detail'),
+    url(r'^api/ciutats/$',APICiutatList.as_view(), name='ciutat-list'),
+    url(r'^api/ciutats/(?P<pk>\d+)/$',APICiutatDetail.as_view(), name='ciutat-detail'),
+    url(r'^api/pesas/$',APIPesaList.as_view(), name='pesa-list'),
+    url(r'^api/pesas/(?P<pk>\d+)/$',APIPesaDetail.as_view(), name='pesa-detail'),
+    url(r'^api/botigareviews/$', APIBotigaReviewList.as_view(), name='botigareview-list'),
+    url(r'^api/botigareviews/(?P<pk>\d+)/$', APIBotigaReviewDetail.as_view(),name='botigareview-detail'),
+
+)
+# Format suffixes
+urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api','json', 'xml'])
 
