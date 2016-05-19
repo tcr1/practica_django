@@ -19,7 +19,7 @@ class Botiga (models.Model):
 class Ciutat(models.Model):
     nom_ciutat = models.TextField()
     calle = models.TextField(blank=True, null=True)
-    moneda = models.TextField(default="euro")
+    moneda = models.TextField(blank=True)
     botiga_ciutat = models.ManyToManyField(Botiga,related_name='ciutats')
     user = models.ForeignKey(User, default=1)
 

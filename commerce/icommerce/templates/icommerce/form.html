@@ -2,8 +2,45 @@
 {% block content %}
 {% load staticfiles %}
 
+ <script>
+        $(function() {
+            $.getJSON("{% static "monedas.json" %}", {}, function (monedas) {
+                $("#id_moneda").autocomplete({
+                    source: monedas
+                });
+            });
+
+            $("#id_nom_ciutat").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "http://ws.geonames.org/searchJSON",
+                        dataType: "jsonp",
+                        data: {
+                            featureClass: "P",
+                            maxRows: 10,
+                            name_startsWith: request.term,
+                            username: "tandy"
+                        },
+                        success: function( data ) {
+                            response( $.map( data.geonames, function( item ) {
+                                return {
+                                    label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+                                    value: item.name,
+                                    stateOrProvince: item.adminName1,
+                                    countryName: item.countryName
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+            });
+        });
+    </script>
+
+
     <body>
-        <form method="post" enctype="multipart/form-data" action="" autocomplete="on">
+        <form method="post" enctype="multipart/form-data" action="">
                 {% csrf_token %}
                 <table>
                     {{ form.as_table }}
