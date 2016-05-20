@@ -9,6 +9,8 @@ class Botiga (models.Model):
     tipus_botiga=models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
+    image = models.ImageField(upload_to="icommerce", blank=True, null=True)
+
 
     def __unicode__(self):
         return u"%s" % self.nom_botiga
@@ -35,6 +37,7 @@ class Marca(models.Model):
     descripcio = models.TextField(blank=True, null=True)
     #botiga = models.ForeignKey(Botiga,null=True,related_name='marcas')
     date = models.DateField(default=date.today)
+    image = models.ImageField(upload_to="icommerce", blank=True, null=True)
     botigas = models.ManyToManyField(Botiga,related_name='marcas')
 
     def __unicode__(self):
@@ -59,6 +62,7 @@ class Pesa(models.Model):
     preu = models.DecimalField('Preu',max_digits=8,decimal_places=2,blank=True,null=True)
     descripcio = models.TextField(blank=True,null=True)
     user = models.ForeignKey(User, default=1)
+    image = models.ImageField(upload_to="icommerce", blank=True, null=True)
     botigas=models.ManyToManyField(Botiga,related_name='botigpesas')
 
     def __unicode__(self):
