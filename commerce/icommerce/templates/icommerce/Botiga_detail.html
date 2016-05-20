@@ -9,7 +9,12 @@
             (<a href="{% url 'icommerce:botiga_edit' botiga.id %}">Edita</a>)
             (<a href="{% url 'icommerce:botiga_delete' botiga.id %}">Esborra</a>)
         {% endif %}
+
     </h1>
+    {%if botiga.image%}
+
+				<p><img	src="{{botiga.image.url}}"/></p>
+    {%endif%}
 
     <h2>Detalls botiga "{{ object }}":</h2>
 
@@ -29,6 +34,8 @@
             <td>{{botiga.date}}</td>
         </tr>
     </table>
+
+
 
     <h1>
     Marques
@@ -60,6 +67,10 @@
 
         {% empty %}<li>Disculpa,encara no hi ha peces en aquesta botiga.</li>
         {% endfor %}
+
+
+
+
 
     <h1>
     Ciutats

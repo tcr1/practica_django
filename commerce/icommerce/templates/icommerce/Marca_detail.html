@@ -12,6 +12,12 @@
         (<a href="{% url 'icommerce:marca_delete' marca.id %}">Esborra</a>)
     {% endif %}
 </h1>
+{%if marca.image%}
+
+				<p><img	src="{{marca.image.url}}"/></p>
+{%endif%}
+
+</h1>
 
 <h2>Detalls de la marca {{ object }}:</h2>
 <table>

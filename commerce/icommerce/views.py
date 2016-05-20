@@ -165,6 +165,7 @@ class PesaRobaList(ListView, ConnegResponseMixin):
 
     def get_queryset(self):
         peces = Pesa.objects.filter(botigas=self.kwargs['pkb'])
+
         return peces
 
 class PesaRobaDetail(DetailView, ConnegResponseMixin):
