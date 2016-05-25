@@ -1,12 +1,15 @@
 {% extends "icommerce/base.html" %}
+{% block title %}Tandy - {{ marca.nom_marca}}{% endblock %}
 {% block content %}
 <head>
 </head>
 
 <body>
+<span vocab="http://schema.org/" typeof="Marca">
 
 <h1>
     {{marca.nom_marca }}
+     <span property="nom_marca">{{ marca.nom_marca }}</span>
     {% if user == marca.user %}
         (<a href="{% url 'icommerce:marca_edit' marca.id %}">Edita</a>)
         (<a href="{% url 'icommerce:marca_delete' marca.id %}">Esborra</a>)
@@ -49,7 +52,7 @@
 {% empty %}<li>Disculpa, aquesta marca no està diponible a cap botiga.</li>
 {% endfor %}
 
-
+</span>
 
 </body>
 {% endblock %}

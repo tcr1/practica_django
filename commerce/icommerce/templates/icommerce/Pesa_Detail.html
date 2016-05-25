@@ -1,10 +1,13 @@
 {% extends "icommerce/base.html" %}
+{% block title %}Tandy - {{pesa.nom_pesa }}{% endblock %}
 {% block content %}
 <head>
 </head>
 <body>
-<h1>
-    {{pesa.nom_pesa }}
+<span vocab="http://schema.org/" typeof="Pesa">
+    <h1>
+    <span property="nom_pesa">{{ pesa.nom_pesa }}</span>
+        {{pesa.nom_pesa }}
     {% if user == pesa.user %}
         (<a href="{% url 'icommerce:pesa_edit' pesa.id %}">Edita</a>)
         (<a href="{% url 'icommerce:pesa_delete' pesa.id %}">Esborra</a>)
@@ -45,6 +48,6 @@
     </tr>
 </table>
 
-
+</span>
 </body>
 {% endblock %}

@@ -1,11 +1,13 @@
 {% extends "icommerce/base.html" %}
+{% block title %}Tandy - {{ciutat.nom_ciutat}}{% endblock %}
 {% block content %}
     <head>
     {% load staticfiles%}
     </head>
 <body>
-
+<span vocab="http://schema.org/" typeof="Ciutat">
 <h1>
+<span property="nom_ciutat">{{ ciutat.nom_ciutat }}</span>
     {{ciutat.nom_ciutat }}
     {% if user == ciutat.user %}
         (<a href="{% url 'icommerce:ciutat_edit' ciutat.id%}">edit</a>)
@@ -27,5 +29,8 @@
         <td>{{ciutat.moneda}}</td>
     </tr>
 </table>
+</span>
 </body>
+
+
 {% endblock %}

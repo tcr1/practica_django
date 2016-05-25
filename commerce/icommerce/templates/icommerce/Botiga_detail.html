@@ -1,10 +1,12 @@
 {% extends "icommerce/base.html" %}
+{% block title %}Tandy - {{ botiga.nom_botiga }}{% endblock %}
 {% block content %}
 <head></head>
 <body>
-
+<span vocab="http://schema.org/" typeof="Botiga">
     <h1>
-        {{botiga.nom_botiga }}
+        <span property="nom_botiga">{{ botiga.nom_botiga }}</span>
+
         {% if user == botiga.user %}
             (<a href="{% url 'icommerce:botiga_edit' botiga.id %}">Edita</a>)
             (<a href="{% url 'icommerce:botiga_delete' botiga.id %}">Esborra</a>)
@@ -69,9 +71,6 @@
         {% endfor %}
 
 
-
-
-
     <h1>
     Ciutats
         {% if user.is_authenticated %}
@@ -85,18 +84,41 @@
 
         {% empty %}<li>Disculpa,la botiga no esta en cap ciutat.</li>
         {% endfor %}
+
 <h2>Opinions</h2>
-<ul>
+{% if botiga.botigareview_set.all|length > 0 %}
+<span rel="aggregateRating">
+    <p typeof="AggregateRating">
+        Average rating <span property="ratingValue">{{ botiga.averageRating|stringformat:".1f" }}</span>
+
+        {% with botiga.botigareview_set.all|length as reviewCount %}
+        from <span property="reviewCount">{{ reviewCount }}</span> review{{ reviewCount|pluralize }}
+
+        {% endwith %}
+
+    </p>
+</span>
+<ul rel="review">
     {% for review in botiga.botigareview_set.all %}
-        <li>
-            <p>{{ review.rating }} star{{ review.rating|pluralize }} <a href="{{ botiga.id }}/reviews/{{  review.id }}/edit/">Edita</a>
-            <a href="{{ botiga.id }}/reviews/{{  review.id }}/delete/">Esborrar</a></p>
-            <p>{{ review.comment }}</p>
-            <p>Creat per : {{ review.user }} a la data {{ review.date }}</p>
+        <li typeof="Review">
+            <p rel="reviewRating" typeof="Rating">
+                <span property="worstRating" content="{{ RATING_CHOICES.0.0 }}"></span>
+                <span property="ratingValue">{{ review.rating }}</span> star{{ review.rating|pluralize }}
+                <a href="{{ botiga.id }}/reviews/{{  review.id }}/edit/">Edita</a>
+             <a href="{{ botiga.id }}/reviews/{{  review.id }}/delete/">Esborrar</a>
+                {% with RATING_CHOICES|last as best %}
+                <span property="bestRating" content="{{ best.0 }}"></span>
+                {% endwith %}
+            </p>
+            <p property="description">{{ review.comment }}</p>
+            <p>Created by <span property="author">{{ review.user }}</span> on
+                <span property="datePublished" content="{{ review.date|date:'Y-m-d' }}">{{ review.date }}</span></p>
         </li>
-        {% empty %}<li>Disculpa, aquesta botiga no té cap opinio, sigues el primer en fer-ho!.</li>
     {% endfor %}
 </ul>
+</span>
+{% endif %}
+
 <h3>Afegir puntuació:</h3>
 <form action="{% url 'icommerce:review_create' botiga.id %}" method="post">
     {% csrf_token %}

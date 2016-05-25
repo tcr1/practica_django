@@ -18,6 +18,11 @@ class Botiga (models.Model):
     def get_absolute_url(self):
         return reverse('icommerce:botiga_detail', kwargs={'pk': self.pk, 'extension': 'html'})
 
+    def averageRating(self):
+        ratingSum = sum([float(review.rating) for review in self.botigareview_set.all()])
+        reviewCount = self.botigareview_set.count()
+        return ratingSum / reviewCount
+
 class Ciutat(models.Model):
     nom_ciutat = models.TextField()
     calle = models.TextField(blank=True, null=True)

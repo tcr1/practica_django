@@ -100,24 +100,7 @@ class BotigaDetail(DetailView, ConnegResponseMixin):
     def get_context_data(self, **kwargs):
         context = super(BotigaDetail, self).get_context_data(**kwargs)
         context['RATING_CHOICES'] = Review.RATING_CHOICES
-        context['average'] = self.get_average_rating()
         return context
-
-    def get_average_rating(self):
-        total = 0
-        reviews = self.get_reviews()
-        for rev in reviews:
-            total += rev.rating
-
-        if (len(reviews)) != 0:
-            av = total / float(len(reviews))
-            dec = float("{0:.2f}".format(av))
-            return dec
-        else:
-            return 2.5
-
-    def get_reviews(self):
-        return BotigaReview.objects.filter(botiga_id=self.kwargs['pk'])
 
 class BotigaCreate(LoginRequiredMixin, CreateView):
     model = Botiga
