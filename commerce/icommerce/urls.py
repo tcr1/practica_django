@@ -31,25 +31,25 @@ urlpatterns = patterns('',
     #Delete Botiga, ex:/icomerce/botigas/id/delete
     url(r'^botigas/(?P<pk>\d+)/delete/$',LoginRequiredCheckIsOwnerDeleteView.as_view(model=Botiga),name='botiga_delete'),
 
-    #CIUTAT
+    #Ubicacio
 
-    #ciutat list, ex.: /icommerce/ciutats.json
-    url(r'^ciutats\.(?P<extension>(json|xml))$', CiutatList.as_view(),name='ciutat_list'),
+    #Ubicacio list, ex.: /icommerce/ubicacios.json
+    url(r'^ubicacios\.(?P<extension>(json|xml))$', UbicacioList.as_view(),name='ubicacio_list'),
 
-    #ciutat details, ex.:  /icommerce/ciutats/id.json
-    url(r'^ciutats/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',CiutatDetail.as_view(),
-        name='ciutat_detail'),
+    #Ubicacio details, ex.:  /icommerce/ubicacios/id.json
+    url(r'^ubicacios/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',UbicacioDetail.as_view(),
+        name='ubicacio_detail'),
 
-    # Crea una ciutat , /icommerce/botigas/create/
-    url(r'^ciutats/create/$', CiutatCreate.as_view(), name='ciutat_create'),
+    # Crea una ubicacio , /icommerce/ubicacios/create/
+    url(r'^ubicacios/create/$', UbicacioCreate.as_view(), name='ubicacio_create'),
 
-    # Edit ciutats details, ex.:/icommerce/ciutats/id/edit
-    url(r'^cuitats/(?P<pk>\d+)/edit/$',LoginRequiredCheckIsOwnerUpdateView.as_view(model=Ciutat,
-                                                                                   form_class=CiutatForm),
-        name='ciutat_edit'),
+    # Edit ubicacio details, ex.:/icommerce/ubicacios/id/edit
+    url(r'^ubicacios/(?P<pk>\d+)/edit/$',LoginRequiredCheckIsOwnerUpdateView.as_view(model=Ubicacio,
+                                                                                   form_class=UbicacioForm),
+        name='ubicacio_edit'),
 
-    #Delete Ciutat, ex:/icomerce/ciutats/id/delete
-    url(r'^ciutats/(?P<pk>\d+)/delete/$',LoginRequiredCheckIsOwnerDeleteView.as_view(model=Ciutat),name='ciutat_delete'),
+    #Delete Ubicacio, ex:/icomerce/ubicacios/id/delete
+    url(r'^ubicacios/(?P<pk>\d+)/delete/$',LoginRequiredCheckIsOwnerDeleteView.as_view(model=Ubicacio),name='ubicacio_delete'),
 
 
     #MARCA
@@ -117,8 +117,8 @@ urlpatterns = patterns('',
     url(r'^api/botigas/(?P<pk>\d+)/$',APIBotigaDetail.as_view(), name='botiga-detail'),
     url(r'^api/marcas/$',APIMarcaList.as_view(), name='marca-list'),
     url(r'^api/marcas/(?P<pk>\d+)/$',APIMarcaDetail.as_view(), name='marca-detail'),
-    url(r'^api/ciutats/$',APICiutatList.as_view(), name='ciutat-list'),
-    url(r'^api/ciutats/(?P<pk>\d+)/$',APICiutatDetail.as_view(), name='ciutat-detail'),
+    url(r'^api/ubicacios/$',APIUbicacioList.as_view(), name='-list'),
+    url(r'^api/ubicacios/(?P<pk>\d+)/$',APIUbicacioDetail.as_view(), name='ubicacio-detail'),
     url(r'^api/pesas/$',APIPesaList.as_view(), name='pesa-list'),
     url(r'^api/pesas/(?P<pk>\d+)/$',APIPesaDetail.as_view(), name='pesa-detail'),
     url(r'^api/botigareviews/$', APIBotigaReviewList.as_view(), name='botigareview-list'),

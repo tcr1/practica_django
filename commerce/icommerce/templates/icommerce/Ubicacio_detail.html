@@ -1,0 +1,45 @@
+{% extends "icommerce/base.html" %}
+{% block title %}Tandy - {{ubicacio.nom_ciutat}}{% endblock %}
+{% block content %}
+    <head>
+    {% load staticfiles%}
+    </head>
+<body>
+<span vocab="http://schema.org/" typeof="PostalAddress">
+<h1>
+<span property="name">{{ ubicacio.nom_ciutat }}</span>
+
+    {% if user == ubicacio.user %}
+        (<a href="{% url 'icommerce:ubicacio_edit' ubicacio.id%}">Edita</a>)
+        (<a href="{% url 'icommerce:ubicacio_delete' ubicacio.id %}">Esborra</a>)
+    {% endif %}
+</h1>
+<h2>Detalls de la localitzacio "{{ object }}":</h2>
+<table>
+		<thead>
+			<td><b>Identificador</b></td>
+			<td><b>Nom Ciutat</b></td>
+            <td><b>Direccio</b></td>
+            <td><b>Numero</b></td>
+            <td><b>Codi Postal</b></td>
+            <td><b>Regio</b></td>
+			<td><b>Pais</b></td>
+
+
+		</thead>
+    <tr>
+        <td>{{ubicacio.id}}</td>
+        <td>{{ubicacio.nom_ciutat}}</td>
+        <td><span property="streetAddress">{{ubicacio.direccio}}</span></td>
+        <td>{{ubicacio.numero}}</td>
+        <td> <span property="postalCode">{{ubicacio.codi_Postal}}</span></td>
+        <td><span property="addressRegion">{{ubicacio.regio}}</span></td>
+		<td><span property="addressCountry">{{ubicacio.pais}}</span></td>
+
+    </tr>
+</table>
+</span>
+</body>
+
+
+{% endblock %}

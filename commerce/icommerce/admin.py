@@ -6,4 +6,4 @@ import models
 admin.site.register(models.Botiga)
 admin.site.register(models.Marca)
 admin.site.register(models.Pesa)
-admin.site.register(models.Ciutat)
+admin.site.register(models.Ubicacio)

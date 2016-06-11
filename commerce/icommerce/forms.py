@@ -14,9 +14,9 @@ class MarcaForm(ModelForm):
         exclude = ('user', 'date',)
 
 
-class CiutatForm(ModelForm):
+class UbicacioForm(ModelForm):
     class Meta:
-        model = Ciutat
+        model = Ubicacio
         exclude = ('user', 'date',)
 
 class PesaForm(ModelForm):

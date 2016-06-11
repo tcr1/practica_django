@@ -6,7 +6,11 @@ from datetime import date
 # Create your models here.
 class Botiga (models.Model):
     nom_botiga=models.TextField(blank=True, null=True)
+    telefon=models.TextField(blank=True, null=True)
     tipus_botiga=models.TextField(blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
+    fundador=models.TextField(blank=True, null=True)
+    grup_empresarial=models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
     image = models.ImageField(upload_to="icommerce", blank=True, null=True)
@@ -23,18 +27,21 @@ class Botiga (models.Model):
         reviewCount = self.botigareview_set.count()
         return ratingSum / reviewCount
 
-class Ciutat(models.Model):
+class Ubicacio(models.Model):
     nom_ciutat = models.TextField()
-    calle = models.TextField(blank=True, null=True)
-    moneda = models.TextField(blank=True)
-    botiga_ciutat = models.ManyToManyField(Botiga,related_name='ciutats')
+    direccio = models.TextField(blank=True, null=True)
+    numero = models.IntegerField(blank=True, null=True)
+    codi_Postal = models.TextField(blank=True, null=True)
+    regio = models.TextField(blank=True, null=True)
+    pais = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
+    botiga_ciutat = models.ForeignKey(Botiga,null=True, related_name='ciutats')
 
     def __unicode__(self):
         return u"%s" % self.nom_ciutat
 
     def get_absolute_url(self):
-        return reverse('icommerce:ciutat_detail', kwargs={'pk':self.pk, 'extension': 'html'})
+        return reverse('icommerce:ubicacio_detail', kwargs={'pk':self.pk, 'extension': 'html'})
 
 class Marca(models.Model):
     nom_marca = models.TextField(blank=True, null=True)

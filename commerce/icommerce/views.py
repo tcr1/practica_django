@@ -174,32 +174,32 @@ class PesaCreate(LoginRequiredMixin,CreateView):
             form.instance.botigas.add(botiga)
         return super(PesaCreate, self).form_valid(form)
 
-#--------------------Ciutat--------------------
+#--------------------Ubicacio--------------------
 
-class CiutatList(ListView, ConnegResponseMixin):
-    model = Ciutat
-    template_name = 'icommerce/Ciutat_list.html'
+class UbicacioList(ListView, ConnegResponseMixin):
+    model = Ubicacio
+    template_name = 'icommerce/Ubicacio_list.html'
 
     def get_queryset(self):
-        ciutats = Ciutat.objects.all()
+        ciutats = Ubicacio.objects.all()
         return ciutats
 
-class CiutatDetail(DetailView, ConnegResponseMixin):
-    model = Ciutat
-    template_name = 'icommerce/Ciutat_detail.html'
+class UbicacioDetail(DetailView, ConnegResponseMixin):
+    model = Ubicacio
+    template_name = 'icommerce/Ubicacio_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(CiutatDetail, self).get_context_data(**kwargs)
+        context = super(UbicacioDetail, self).get_context_data(**kwargs)
         return context
 
-class CiutatCreate(LoginRequiredMixin,CreateView):
-    model = Ciutat
+class UbicacioCreate(LoginRequiredMixin,CreateView):
+    model = Ubicacio
     template_name = 'icommerce/form.html'
-    form_class = CiutatForm
+    form_class = UbicacioForm
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(CiutatCreate, self).form_valid(form)
+        return super(UbicacioCreate, self).form_valid(form)
 
 #------------------Review-------------------
 @login_required()
@@ -246,17 +246,17 @@ class APIMarcaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Marca.objects.all()
     serializer_class = MarcaSerializer
 
-class APICiutatList(generics.ListCreateAPIView):
+class APIUbicacioList(generics.ListCreateAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
-    model = Ciutat
-    queryset = Ciutat.objects.all()
-    serializer_class = CiutatSerializer
+    model = Ubicacio
+    queryset = Ubicacio.objects.all()
+    serializer_class = UbicacioSerializer
 
-class APICiutatDetail(generics.RetrieveUpdateDestroyAPIView):
+class APIUbicacioDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
-    model = Ciutat
-    queryset = Ciutat.objects.all()
-    serializer_class = CiutatSerializer
+    model = Ubicacio
+    queryset = Ubicacio.objects.all()
+    serializer_class = UbicacioSerializer
 
 class APIPesaList(generics.ListCreateAPIView):
     permission_classes = (IsOwnerOrReadOnly,)

@@ -3,20 +3,21 @@
 {% block content %}
 <head></head>
 <body>
-<span vocab="http://schema.org/" typeof="Botiga">
-    <h1>
-        <span property="nom_botiga">{{ botiga.nom_botiga }}</span>
+<span vocab="http://schema.org/" typeof="ClothingStore">
+{%if botiga.image%}
 
+				<p><img	src="{{botiga.image.url}}"/></p>
+    {%endif%}
+    <h1>
+        <span property="name">{{ botiga.nom_botiga }}</span>
         {% if user == botiga.user %}
             (<a href="{% url 'icommerce:botiga_edit' botiga.id %}">Edita</a>)
             (<a href="{% url 'icommerce:botiga_delete' botiga.id %}">Esborra</a>)
         {% endif %}
 
     </h1>
-    {%if botiga.image%}
 
-				<p><img	src="{{botiga.image.url}}"/></p>
-    {%endif%}
+
 
     <h2>Detalls botiga "{{ object }}":</h2>
 
@@ -25,13 +26,21 @@
             <td><b>Identificador Botiga</b></td>
             <td><b>Nom botiga</b></td>
             <td><b>Tipus</b></td>
+            <td><b>Telefon</b></td>
+            <td><b>Lloc Web</b></td>
+            <td><b>Fundador</b></td>
+            <td><b>Grup Empresarial</b></td>
             <td><b>Usuari</b></td>
             <td><b>Data</b></td>
         </thead>
         <tr>
             <td>{{botiga.id}}</td>
             <td>{{botiga.nom_botiga }}</td>
-            <td>{{botiga.tipus_botiga}}</td>
+            <td><span property="hasOfferCatalog">{{ botiga.tipus_botiga }}</span></td>
+            <td> <span property="telephone">{{ botiga.telefon }}</span></td>
+            <td><span property="url">{{ botiga.url }}</span></td>
+            <td><span property="founder">{{ botiga.fundador }}</span></td>
+            <td><span property="member">{{ botiga.grup_empresarial }}</span></td>
             <td>{{botiga.user}}</td>
             <td>{{botiga.date}}</td>
         </tr>
@@ -72,15 +81,15 @@
 
 
     <h1>
-    Ciutats
+    On es troba?
         {% if user.is_authenticated %}
-            (<a href="{% url 'icommerce:ciutat_create' %}">Afegeix</a>)
+            (<a href="{% url 'icommerce:ubicacio_create' %}">Afegeix</a>)
         {% endif %}
     </h1>
 
-        {% for ciutat in botiga.ciutats.all %}
-            <li><a href="{% url 'icommerce:ciutat_detail' ciutat.id 'html' %}">
-                {{ ciutat.nom_ciutat }}</a></li>
+        {% for ubicacio in botiga.ciutats.all %}
+            <li><a href="{% url 'icommerce:ubicacio_detail' ubicacio.id 'html' %}">
+                {{ ubicacio.nom_ciutat }}</a></li>
 
         {% empty %}<li>Disculpa,la botiga no esta en cap ciutat.</li>
         {% endfor %}
@@ -100,23 +109,32 @@
 </span>
 <ul rel="review">
     {% for review in botiga.botigareview_set.all %}
+
         <li typeof="Review">
             <p rel="reviewRating" typeof="Rating">
                 <span property="worstRating" content="{{ RATING_CHOICES.0.0 }}"></span>
                 <span property="ratingValue">{{ review.rating }}</span> star{{ review.rating|pluralize }}
-                <a href="{{ botiga.id }}/reviews/{{  review.id }}/edit/">Edita</a>
-             <a href="{{ botiga.id }}/reviews/{{  review.id }}/delete/">Esborrar</a>
                 {% with RATING_CHOICES|last as best %}
                 <span property="bestRating" content="{{ best.0 }}"></span>
+
                 {% endwith %}
             </p>
+
             <p property="description">{{ review.comment }}</p>
             <p>Created by <span property="author">{{ review.user }}</span> on
                 <span property="datePublished" content="{{ review.date|date:'Y-m-d' }}">{{ review.date }}</span></p>
         </li>
+        {% if user == review.user %}
+            <a href="{{ botiga.id }}/reviews/{{  review.id }}/edit/" >Edita</a>
+        {% endif %}
+        {% if user == review.user %}
+            <a href="{{ botiga.id }}/reviews/{{  review.id }}/delete/">Esborrar</a>
+        {% endif %}
+
     {% endfor %}
 </ul>
 </span>
+
 {% endif %}
 
 <h3>Afegir puntuació:</h3>

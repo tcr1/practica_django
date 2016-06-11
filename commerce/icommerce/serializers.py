@@ -12,7 +12,7 @@ class BotigaSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = Botiga
-        fields = ('uri', 'nom_botiga', 'tipus_botiga', 'user', 'date','marcas','botigareview_set')
+        fields = ('uri', 'nom_botiga', 'tipus_botiga','url','fundador','grup_empresarial','user', 'date','marcas','botigareview_set')
 
 class MarcaSerializer(HyperlinkedModelSerializer):
     uri = HyperlinkedIdentityField(view_name='icommerce:marca-detail')
@@ -24,14 +24,14 @@ class MarcaSerializer(HyperlinkedModelSerializer):
         fields = ('uri', 'nom_marca', 'user', 'descripcio', 'date','botigas')
 
 
-class CiutatSerializer(HyperlinkedModelSerializer):
-    uri = HyperlinkedIdentityField(view_name='icommerce:ciutat-detail')
-    botiga_ciutat= HyperlinkedRelatedField(many=True, view_name='icommerce:botiga-detail', read_only=True)
+class UbicacioSerializer(HyperlinkedModelSerializer):
+    uri = HyperlinkedIdentityField(view_name='icommerce:ubicacio-detail')
+    botiga_ciutat= HyperlinkedRelatedField(view_name='icommerce:botiga-detail', read_only=True)
     user = CharField(read_only=True)
 
     class Meta:
-        model = Ciutat
-        fields = ('uri', 'nom_ciutat', 'calle', 'moneda', 'botiga_ciutat', 'user')
+        model = Ubicacio
+        fields = ('uri', 'nom_ciutat', 'direccio','numero','codi_Postal','pais', 'botiga_ciutat','user')
 
 class PesaSerializer(HyperlinkedModelSerializer):
     uri = HyperlinkedIdentityField(view_name='icommerce:pesa-detail')
