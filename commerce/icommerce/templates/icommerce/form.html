@@ -4,9 +4,9 @@
 
  <script>
         $(function() {
-            $.getJSON("{% static "monedas.json" %}", {}, function (monedas) {
-                $("#id_moneda").autocomplete({
-                    source: monedas
+            $.getJSON("{% static "countries.json" %}", {}, function (countries) {
+                $("#id_pais").autocomplete({
+                    source: countries
                 });
             });
 
@@ -34,6 +34,13 @@
                     });
                 },
                 minLength: 2,
+
+                select: function( event, ui ) {
+                    if (ui.item) {
+                        $("#id_regio").val(ui.item.stateOrProvince);
+                        $("#id_pais").val(ui.item.countryName);
+                    }
+                }
             });
         });
     </script>
